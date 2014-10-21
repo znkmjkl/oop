@@ -45,8 +45,15 @@ public class HotelTester {
 		 List<QueryResult> list = new ArrayList<QueryResult>();
 		 list.add(qr);
 		 
-		 Assert.assertEquals(1, hotel.findFreeRooms(start, end, 2).size());
+		 List<QueryResult> result = hotel.findFreeRooms(start, end, 2);
 		 
+		 Assert.assertEquals(1, result.size());
+		 
+		 if(!result.isEmpty()) {
+			 Assert.assertEquals(1, result.get(0).getRooms().size());
+			 Assert.assertEquals(4*180, result.get(0).getPrice());
+		 }
+
 	 }
 	 
 	 @Test
@@ -68,9 +75,6 @@ public class HotelTester {
 		 Room r4 = new Room();
 		 r4.setSize(4);
 		 hotel.add(r4);
-		 
-		 
-		 
-		 
+		  
 	 }
 }

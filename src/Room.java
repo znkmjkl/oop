@@ -23,7 +23,6 @@ public class Room {
 		
 	String name() {
 		return null;
-		
 	}
 	
     int n_persons() {

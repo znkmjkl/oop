@@ -23,6 +23,7 @@ public class Hotel {
 		 return new Room();
 	 }
 	 
+	 //TODO wyliczanie roznych mozliwosci zakwaterowania (lista pokoi)
 	 public List<QueryResult> findFreeRooms(Calendar start, Calendar end, int n_persons) {
 		 
 		 List<QueryResult> result = new ArrayList<QueryResult>();
@@ -35,8 +36,7 @@ public class Hotel {
 		 
 		 long nights = diffs / (24 * 60 * 60 * 1000);		 
 		 
-		 for(Room r : getRooms()) {
-			  
+		 for(Room r : getRooms()) {	  
 			 
 			 if (r.getSize() >= n_persons) {
 			 	List<Room> rooms = new ArrayList<Room>();
