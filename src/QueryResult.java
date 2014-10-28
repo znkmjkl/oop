@@ -4,13 +4,13 @@ import java.util.List;
 public class QueryResult {
 	
 	private List<Room> rooms;
-	private int price;
+	private long price = 0l;
 	
 	public void setRooms(List<Room> rooms) {
 		this.rooms = rooms;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(long price) {
 		this.price = price;
 	}
 	
@@ -18,7 +18,7 @@ public class QueryResult {
 		return rooms;
 	}
 	
-    public int getPrice() {
+    public long getPrice() {
     	return price;
     }
     

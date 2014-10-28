@@ -62,19 +62,31 @@ public class HotelTester {
 		 
 		 Room r1 = new Room();
 		 r1.setSize(1);
+		 r1.setPrice(120L);
 		 hotel.add(r1);
 		 
 		 Room r2 = new Room();		 
 		 r2.setSize(2);
+		 r2.setPrice(180L);
 		 hotel.add(r2);
 		 
 		 Room r3 = new Room();
-		 r3.setSize(2);		 
+		 r3.setSize(2);	
+		 r3.setPrice(180L);
 		 hotel.add(r3);
 		 
 		 Room r4 = new Room();
 		 r4.setSize(4);
+		 r4.setPrice(300L);
 		 hotel.add(r4);
-		  
+		 
+		 Calendar start = Calendar.getInstance();
+		 Calendar end = Calendar.getInstance();
+		 
+		 start.set(2014, 6, 18);
+		 end.set(2014, 6, 22);
+		 
+		 List<QueryResult> result = hotel.findFreeRooms(start, end, 3);		 
+		 
 	 }
 }
