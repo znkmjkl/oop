@@ -24,13 +24,17 @@ public class Hotel implements HotelInt{
 
 	public void add(Room room) {
 		 rooms.add(room);
-	 }
+	}
 	 
-	 public Room room(String name) {
+	public Room room(String name) {
 		 return new Room();
-	 }
+	}
+	
+	//TODO
+	private List<Room> getAvailableRooms(Calendar start, Calendar end) {
+		return null;
+	}
 	 
-	 //TODO wyliczanie roznych mozliwosci zakwaterowania (lista pokoi)
 	 public List<QueryResult> findFreeRooms(Calendar start, Calendar end, int n_persons) {
 		 
 		List<QueryResult> result = new ArrayList<QueryResult>();	 
@@ -64,7 +68,7 @@ public class Hotel implements HotelInt{
 			 int it = 0;
 			 
 			 for (Room r : resultRoomList) {
-				 if (room.getSize() == r.getSize()) {
+				 if (room.getName().equals(r.getName())) {
 					 it++;
 				 }
 			 }

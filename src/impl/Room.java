@@ -13,6 +13,7 @@ public class Room implements RoomInt{
 		this.size = size;
 	}
 	
+	//Dodac throws RoomNameAlreadyExistsException
 	public Room(int size, long price, String name) {
 		this.size = size;
 		this.price = price;
@@ -24,7 +25,8 @@ public class Room implements RoomInt{
 	public String getName() {
 		return name;
 	}
-
+	
+	//Dodac throws RoomNameAlreadyExistsException
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -61,7 +63,7 @@ public class Room implements RoomInt{
     public boolean equals(Object o) {
     	Room r = (Room) o;
     	
-    	if(r.getSize() == this.getSize()) return true;
+    	if(r.getName().equals(this.getName())) return true;
     	
     	return false;
     }
