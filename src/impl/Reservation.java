@@ -1,7 +1,10 @@
+package impl;
+
+import interfaces.ReservationInt;
 import java.util.Calendar;
 
 
-public class Reservation {
+public class Reservation implements ReservationInt{
 	Person person;
 	Calendar start;
 	Calendar end;
