@@ -11,7 +11,7 @@ import java.util.List;
 
 
 public class Hotel implements HotelInt{
-	private List<Reservation> reservations;
+	private List<Reservation> reservations = new ArrayList<Reservation>();
 	private List<Room> rooms = new ArrayList<Room>();
 	
 	public List<Room> getRooms() {
@@ -37,27 +37,29 @@ public class Hotel implements HotelInt{
 	 
 	 public List<QueryResult> findFreeRooms(Calendar start, Calendar end, int n_persons) {
 		 
-		List<QueryResult> result = new ArrayList<QueryResult>();	 
-		 
+		List<QueryResult> result = new ArrayList<QueryResult>();		 
 		long diffs = end.getTimeInMillis() - start.getTimeInMillis();		 
 		long nights = diffs / (24 * 60 * 60 * 1000);		
 		
 		result = getResults(n_persons, nights);		
-		 
+		
 		return result;
 	 }
 	 
-	 public void reserve(Calendar start, Calendar end, QueryResult result, Person person){
+	 public void reserve(Calendar start, Calendar end, QueryResult toReserve, Person person){
 		 
-		 for(Room r : result.getRooms()){		 
+		 for(Room r : toReserve.getRooms()){		 
 			 Reservation res = new Reservation();
 			 res.setStart(start);
 			 res.setEnd(end);
 			 res.setPerson(person);
-			 res.setRoom(r);
+			 res.setRoom(r);	
 			 reservations.add(res);
 		 }
 	 }
+	 
+	 
+	 
 	 
 	 private void addToResults(List<Room> resultRoomList, List<Room> rooms, List<QueryResult> results) {
 		 QueryResult result = new QueryResult();
@@ -108,7 +110,7 @@ public class Hotel implements HotelInt{
 	 
 	 //zwraca liste mozliwosci zakwaterowania danej liczby osob
 	 //zmienic na private
-	 public List<QueryResult> getResults(int peopleNr, long nights) {
+	 private List<QueryResult> getResults(int peopleNr, long nights) {
 		 
 		 List<QueryResult> results = addResult(new ArrayList<Room>(), new ArrayList<Room>(getRooms()), 0, 0, peopleNr, new ArrayList<QueryResult>());
 		 
@@ -136,9 +138,11 @@ public class Hotel implements HotelInt{
 			 }
 		 }
 		Collections.sort(okResults, new Hotel.QueryComparator());
+		
+		
 		return okResults; 
 	 } 
-	
+	/* sortowanie po cenie */
 	 private static class QueryComparator implements Comparator<QueryResult> {
 		 public int compare(QueryResult qr1, QueryResult qr2) {
 			 return Long.compare(qr1.getPrice(),qr2.getPrice()); 
