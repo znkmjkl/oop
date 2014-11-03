@@ -12,6 +12,7 @@ import java.util.List;
 
 public class Hotel implements HotelInt{
 	private List<Reservation> reservations = new ArrayList<Reservation>();
+	
 	private List<Room> rooms = new ArrayList<Room>();
 	
 	public List<Room> getRooms() {
@@ -31,11 +32,40 @@ public class Hotel implements HotelInt{
 	}
 	
 	//TODO
-	private List<Room> getAvailableRooms(Calendar start, Calendar end) {
-		return null;
+	public List<Room> getAvailableRooms(Calendar start, Calendar end) {
+		
+		List<Room> availableRooms = new ArrayList<Room>();
+		List<Room> allRooms = getRooms();
+		
+		for (Reservation res : getReservations()) {
+			if((start.getTimeInMillis() <= res.getStart().getTimeInMillis()
+				&& end.getTimeInMillis() >= res.getStart().getTimeInMillis())
+				|| 
+				(end.getTimeInMillis() <= res.getEnd().getTimeInMillis()
+				&& start.getTimeInMillis() >= res.getEnd().getTimeInMillis())
+					
+				) {
+				
+				if(allRooms.contains(res.getRoom())) {
+					allRooms.remove(res.getRoom());
+				}
+
+				
+			}
+		}
+		
+		return allRooms;
 	}
 	 
-	 public List<QueryResult> findFreeRooms(Calendar start, Calendar end, int n_persons) {
+	 public List<Reservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
+	}
+
+	public List<QueryResult> findFreeRooms(Calendar start, Calendar end, int n_persons) {
 		 
 		List<QueryResult> result = new ArrayList<QueryResult>();		 
 		long diffs = end.getTimeInMillis() - start.getTimeInMillis();		 

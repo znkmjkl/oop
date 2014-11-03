@@ -90,5 +90,13 @@ public class HotelTester {
 		 
 		 hotel.reserve(start, end, result.get(0), p);
 		 
+		 Assert.assertEquals(2, hotel.getReservations().size());
+		 
+		 List<QueryResult> result2 = hotel.findFreeRooms(start, end, 1);
+		 
+		 hotel.reserve(start, end, result2.get(0), p);
+		 
+		 Assert.assertEquals(3, hotel.getReservations().size());
+		 
 	 }
 }

@@ -43,6 +43,13 @@ public class App {
 		 p.setEmail("jan_nowak@gmail.com");
 		 p.setAdress("Krakow, ul. Nowakowska 31a");
 		h.reserve(start, end, qr.get(0), p);
+		
+		
+		List<Room> aRooms = h.getAvailableRooms(start, end);
+		
+		System.out.println(aRooms.size());
+		System.out.println(aRooms.get(0).getName());
+		System.out.println(aRooms.get(1).getName());
 
 	}
 
