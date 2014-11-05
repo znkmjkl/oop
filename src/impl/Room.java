@@ -13,6 +13,10 @@ public class Room implements RoomInt{
 		this.size = size;
 	}
 	
+	public Room(String name) {
+		this.name = name;
+	}
+	
 	//Dodac throws RoomNameAlreadyExistsException
 	public Room(int size, long price, String name) {
 		this.size = size;

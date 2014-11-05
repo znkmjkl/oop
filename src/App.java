@@ -15,17 +15,29 @@ public class App {
 		
 		rooms.add(new Room(1, 130l, "room1"));
 		rooms.add(new Room(2, 180l, "room2"));
-		rooms.add(new Room(2, 180l, "room3"));
-		rooms.add(new Room(4, 300l, "room4"));		
+		rooms.add(new Room(2, 182l, "room22"));
+		rooms.add(new Room(3, 180l, "room3"));
+		rooms.add(new Room(3, 185l, "room33"));
+		rooms.add(new Room(4, 300l, "room4"));
 		
 		h.setRooms(rooms);	
+		
+		for(Room r : h.getRooms()) {
+			System.out.println(r.getSize());
+		}
+		
+		System.out.println();
 		
 		Calendar start = Calendar.getInstance();
 		Calendar end = Calendar.getInstance();
 		start.set(2014, 6, 18);
 		end.set(2014, 6, 22);
 		
-		List<QueryResult> qr = h.findFreeRooms(start, end, 3);
+		int lOsob = 2;
+		
+		System.out.println("Ilosc osob: " + lOsob);
+		
+		List<QueryResult> qr = h.findFreeRooms(start, end, lOsob);
 		
 		System.out.println("results: " + qr.size());
 		
@@ -38,19 +50,20 @@ public class App {
 			System.out.println();
 		}
 		Person p = new Person();
-		 p.setfirstName("Jan");
-		 p.setSecondName("Nowak");
-		 p.setEmail("jan_nowak@gmail.com");
-		 p.setAdress("Krakow, ul. Nowakowska 31a");
+		p.setfirstName("Jan");
+		p.setSecondName("Nowak");
+		p.setEmail("jan_nowak@gmail.com");
+		p.setAdress("Krakow, ul. Nowakowska 31a");
 		h.reserve(start, end, qr.get(0), p);
 		
+//		qr = h.getCheapest(qr, 1);
+		System.out.println("Cheapest: " + qr.size());
 		
-		List<Room> aRooms = h.getAvailableRooms(start, end);
+		for (QueryResult f : qr) {
+			System.out.println(f.getPrice());
+		}
 		
-		System.out.println(aRooms.size());
-		System.out.println(aRooms.get(0).getName());
-		System.out.println(aRooms.get(1).getName());
-
+		
 	}
 
 }

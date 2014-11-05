@@ -20,9 +20,50 @@ public class HotelTester {
 	   Calendar start = Calendar.getInstance();
 	   Calendar end = Calendar.getInstance();
 	   
-	   Assert.assertEquals(0, hotel.findFreeRooms(start, end, 5).size());
-	   
+	   Assert.assertEquals(0, hotel.findFreeRooms(start, end, 5).size());  
 	 }
+	
+	@Test
+	public void getCheapestQueryResults() {
+		Hotel hotel = new Hotel();
+		
+		List<Room> rooms = new ArrayList<Room>();
+		
+		rooms.add(new Room(1, 130l, "room1"));
+		rooms.add(new Room(2, 170l, "room2"));
+		rooms.add(new Room(2, 180l, "room22"));
+		rooms.add(new Room(3, 210l, "room3"));
+		rooms.add(new Room(3, 220l, "room33"));
+		rooms.add(new Room(4, 300l, "room4"));
+		
+		hotel.setRooms(rooms);
+		
+		int[] personNrs = {1, 2, 4, 7};
+		
+		Calendar start = Calendar.getInstance();
+		Calendar end = Calendar.getInstance();
+		
+		start.set(2014, 6, 18);
+		end.set(2014, 6, 22);
+		
+		List<QueryResult> qr1 = hotel.findFreeRooms(start, end, personNrs[0]);
+		List<QueryResult> qr2 = hotel.findFreeRooms(start, end, personNrs[1]);
+		List<QueryResult> qr3 = hotel.findFreeRooms(start, end, personNrs[2]);
+		List<QueryResult> qr4 = hotel.findFreeRooms(start, end, personNrs[3]);
+		
+		Assert.assertEquals(3, qr1.size());
+		Assert.assertEquals(520, qr1.get(0).getPrice());
+		
+		Assert.assertEquals(3, qr2.size());
+		Assert.assertEquals(680, qr2.get(0).getPrice());
+		
+		Assert.assertEquals(5, qr3.size());
+		Assert.assertEquals(1200, qr3.get(0).getPrice());
+		
+		Assert.assertEquals(true, qr1.get(0).getRooms().contains(new Room("room1")));
+		Assert.assertEquals(true, qr4.get(0).getRooms().contains(new Room("room4")));
+		
+	}
 	
 	 @Test
 	 public void searchRoom() {
