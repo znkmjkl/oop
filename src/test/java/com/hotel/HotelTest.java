@@ -1,4 +1,4 @@
-package test.java.com.hotel;
+package com.hotel;
 
 
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import main.java.com.hotel.impl.*;
+import com.hotel.impl.*;
 
 public class HotelTest {
 

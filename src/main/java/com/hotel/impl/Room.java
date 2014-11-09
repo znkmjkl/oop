@@ -1,4 +1,4 @@
-package main.java.com.hotel.impl;
+package com.hotel.impl;
 
 public class Room {
 
@@ -67,10 +67,12 @@ public class Room {
 
 	@Override
 	public boolean equals(Object o) {
-		Room r = (Room) o;
+		if(o instanceof Room) {
+			Room r = (Room) o;
 
-		if (r.getName().equals(this.getName()))
-			return true;
+			if (r.getName().equals(this.getName()))
+				return true;
+		}
 
 		return false;
 	}

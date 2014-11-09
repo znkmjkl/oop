@@ -1,4 +1,4 @@
-package main.java.com.hotel.impl;
+package com.hotel.impl;
 
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
-import main.java.com.hotel.interfaces.HotelInt;
+import com.hotel.interfaces.HotelInt;
 
 public class Hotel implements HotelInt {
 

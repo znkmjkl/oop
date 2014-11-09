@@ -1,8 +1,8 @@
-package main.java.com.hotel.impl;
+package com.hotel.impl;
 
 import java.util.Calendar;
 
-import main.java.com.hotel.interfaces.ReservationInt;
+import com.hotel.interfaces.ReservationInt;
 
 public class Reservation implements ReservationInt {
 

@@ -1,4 +1,4 @@
-package main.java.com.hotel.impl;
+package com.hotel.impl;
 
 import java.util.Collections;
 import java.util.List;

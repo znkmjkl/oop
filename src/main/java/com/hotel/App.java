@@ -1,8 +1,9 @@
-package main.java.com.hotel;
+package com.hotel;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import main.java.com.hotel.impl.*;
+import com.hotel.impl.*;
 
 
 public class App {

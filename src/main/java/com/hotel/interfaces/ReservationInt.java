@@ -1,9 +1,9 @@
-package main.java.com.hotel.interfaces;
+package com.hotel.interfaces;
 
 
 import java.util.Calendar;
 
-import main.java.com.hotel.impl.*;
+import com.hotel.impl.*;
 
 public interface ReservationInt {
 	public Person getPerson();
