@@ -17,7 +17,7 @@ public class Hotel implements HotelInt {
 
 	private List<Room> rooms = new ArrayList<Room>();
 
-	
+	private List<Season> seasons = new ArrayList<Season>();
 	
 	public void add(Room room) {
 		rooms.add(room);
@@ -98,6 +98,18 @@ public class Hotel implements HotelInt {
 			}			
 		}
 	}
+	public List<Season> getSeasons(){
+		return seasons;
+	}
+	
+	public void addSeason(Season s){
+		seasons.add(s);
+	}
+	
+	//TODO
+	private long getRoomPrice(Room room,Calendar start,Calendar end){
+		return 0L;
+	}
 	
 	private boolean checkRoomAvailable(Calendar start,Calendar end, Room room){
 		for(Room r : getAvailableRooms(start, end)){
@@ -115,7 +127,7 @@ public class Hotel implements HotelInt {
 
 		Deque<QueryResult> all = new LinkedList<QueryResult>(results);
 		List<QueryResult> cheapest = new ArrayList<QueryResult>();
-		int i = 0;
+		
 		while (cheapest.size() < resultNr && !all.isEmpty()) {
 			cheapest.add(all.pollFirst());
 

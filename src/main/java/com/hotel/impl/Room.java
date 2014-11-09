@@ -1,14 +1,18 @@
 package com.hotel.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Room {
 
 	private String name;
 	private int size;
 	private Person person;
-	private long price = 0l;
+	//private long price = 0l;
+	private Map<String, Long> price = new HashMap<String, Long>();
 	
 	public Room(int size) {
-		this.size = size;
+		this.size = size;		
 	}
 
 	public Room(String name) {
@@ -17,7 +21,7 @@ public class Room {
 	
 	public Room(int size, long price, String name) {
 		this.size = size;
-		this.price = price;
+		this.price.put("normal", price);
 		this.name = name;
 	}
 
@@ -57,12 +61,15 @@ public class Room {
 		return this.person;
 	}
 
-	public void setPrice(long price) {
-		this.price = price;
+	public void setPrice(String seasonName, long price) {
+		this.price.put(seasonName, price);
 	}
 
 	public long getPrice() {
-		return price;
+		return price.get("normal");
+	}
+	public long getPrice(String seasonName){
+		return price.get(seasonName);
 	}
 
 	@Override
