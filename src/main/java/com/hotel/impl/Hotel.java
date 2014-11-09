@@ -1,4 +1,4 @@
-package com.hotel.impl;
+package main.java.com.hotel.impl;
 
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.hotel.interfaces.HotelInt;
+import main.java.com.hotel.interfaces.HotelInt;
 
 public class Hotel implements HotelInt {
 
@@ -17,6 +17,20 @@ public class Hotel implements HotelInt {
 
 	private List<Room> rooms = new ArrayList<Room>();
 
+	
+	
+	public void add(Room room) {
+		rooms.add(room);
+	}
+	
+	public Room room (String name){
+		for(Room r : rooms){
+			if (r.getName().equals(name))
+				return r;
+		}
+		return null;
+	}
+	
 	public List<Room> getRooms() {
 		return rooms;
 	}
@@ -25,13 +39,20 @@ public class Hotel implements HotelInt {
 		this.rooms = rooms;
 	}
 
-	public void add(Room room) {
-		rooms.add(room);
+	public List<QueryResult> findFreeRooms(Calendar start, Calendar end,
+			int n_persons) {
+
+		List<QueryResult> result = new ArrayList<QueryResult>();
+		long diffs = end.getTimeInMillis() - start.getTimeInMillis();
+		long nights = diffs / (24 * 60 * 60 * 1000);
+
+		result = getResults(n_persons, nights, start, end);
+		Collections.sort(result, new Hotel.QueryComparator());
+		
+		return getCheapest(result, 3);
 	}
 
-	public Room room(String name) {
-		return new Room();
-	}
+	
 
 	public List<Room> getAvailableRooms(Calendar start, Calendar end) {
 
@@ -43,13 +64,10 @@ public class Hotel implements HotelInt {
 					|| (end.getTimeInMillis() <= res.getEnd().getTimeInMillis() && start
 							.getTimeInMillis() >= res.getEnd()
 							.getTimeInMillis())
-
 			) {
-
 				if (allRooms.contains(res.getRoom())) {
 					allRooms.remove(res.getRoom());
 				}
-
 			}
 		}
 
@@ -63,26 +81,41 @@ public class Hotel implements HotelInt {
 	public void setReservations(List<Reservation> reservations) {
 		this.reservations = reservations;
 	}
+	
+	public void reserve(Calendar start, Calendar end, QueryResult toReserve,
+			Person person) {
 
-	public List<QueryResult> findFreeRooms(Calendar start, Calendar end,
-			int n_persons) {
+		Reservation res = null;	
 
-		List<QueryResult> result = new ArrayList<QueryResult>();
-		long diffs = end.getTimeInMillis() - start.getTimeInMillis();
-		long nights = diffs / (24 * 60 * 60 * 1000);
-
-		result = getResults(n_persons, nights);
-
-		return getCheapest(result, 3);
+		for (Room r : toReserve.getRooms()) {
+			if(checkRoomAvailable(start,end, r)){
+				res = new Reservation();
+				res.setStart(start);
+				res.setEnd(end);
+				res.setPerson(person);
+				res.setRoom(r);	
+				reservations.add(res);			
+			}			
+		}
 	}
+	
+	private boolean checkRoomAvailable(Calendar start,Calendar end, Room room){
+		for(Room r : getAvailableRooms(start, end)){
+			if(r.equals(room)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 
 	private List<QueryResult> getCheapest(List<QueryResult> results,
-			long resultNr) {
+			int resultNr) {
 		Collections.sort(results, new Hotel.QueryComparator());
 
 		Deque<QueryResult> all = new LinkedList<QueryResult>(results);
 		List<QueryResult> cheapest = new ArrayList<QueryResult>();
-
+		int i = 0;
 		while (cheapest.size() < resultNr && !all.isEmpty()) {
 			cheapest.add(all.pollFirst());
 
@@ -91,24 +124,10 @@ public class Hotel implements HotelInt {
 				cheapest.add(all.pollFirst());
 			}
 		}
-
 		return cheapest;
 	}
 
-	public void reserve(Calendar start, Calendar end, QueryResult toReserve,
-			Person person) {
 
-		Reservation res = null;
-
-		for (Room r : toReserve.getRooms()) {
-			res = new Reservation();
-			res.setStart(start);
-			res.setEnd(end);
-			res.setPerson(person);
-			res.setRoom(r);
-			reservations.add(res);
-		}
-	}
 
 	private void addToResults(List<Room> resultRoomList, List<Room> rooms,
 			List<QueryResult> results) {
@@ -163,7 +182,7 @@ public class Hotel implements HotelInt {
 		return results;
 	}
 
-	private List<QueryResult> getResults(int peopleNr, long nights) {
+	private List<QueryResult> getResults(int peopleNr, long nights,Calendar start,Calendar end) {
 
 		List<QueryResult> rawResults = addResult(new ArrayList<Room>(),
 				new ArrayList<Room>(getRooms()), 0, 0, peopleNr,
@@ -174,7 +193,7 @@ public class Hotel implements HotelInt {
 		for (QueryResult qr : rawResults) {
 			boolean isResultOk = true;
 
-			List<Room> availableRooms = new ArrayList<Room>(getRooms());
+			List<Room> availableRooms = new ArrayList<Room>(getAvailableRooms(start, end));
 
 			for (Room r : qr.getRooms()) {
 				if (availableRooms.contains(r)) {
@@ -202,8 +221,7 @@ public class Hotel implements HotelInt {
 		}
 	}
 
-	class RoomComparator implements Comparator<Room> {
-		@Override
+	class RoomComparator implements Comparator<Room> {		
 		public int compare(Room o1, Room o2) {
 			if (o1.getSize() > o2.getSize()) {
 				return -1;

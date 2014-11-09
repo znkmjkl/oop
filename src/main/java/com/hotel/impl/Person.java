@@ -1,4 +1,4 @@
-package com.hotel.impl;
+package main.java.com.hotel.impl;
 
 public class Person {
 

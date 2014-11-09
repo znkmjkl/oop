@@ -1,4 +1,4 @@
-package com.hotel.impl;
+package main.java.com.hotel.impl;
 
 public class Room {
 
@@ -6,7 +6,7 @@ public class Room {
 	private int size;
 	private Person person;
 	private long price = 0l;
-
+	
 	public Room(int size) {
 		this.size = size;
 	}
@@ -14,7 +14,7 @@ public class Room {
 	public Room(String name) {
 		this.name = name;
 	}
-
+	
 	public Room(int size, long price, String name) {
 		this.size = size;
 		this.price = price;
@@ -23,7 +23,16 @@ public class Room {
 
 	public Room() {
 	}
-
+	
+	/**/
+	public String name(){
+		return name;
+	}
+	
+	public int n_persons(){
+		return size;
+	}
+	/**/
 	public String getName() {
 		return name;
 	}
