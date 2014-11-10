@@ -7,9 +7,34 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.hotel.exceptions.RoomNameAlreadyExistsException;
 import com.hotel.impl.Hotel;
 
 public class HotelTest {
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void roomsSetterShouldThrowIAE() {
+		Hotel h = new Hotel();
+		
+		List<Room> rooms = new ArrayList<Room>();
+		rooms.add(new Room("room1"));
+		rooms.add(new Room("room1"));
+		
+		h.setRooms(rooms);
+	}
+	
+	@Test(expected = RoomNameAlreadyExistsException.class)
+	public void addShouldThrowRNAE() {
+		Hotel h = new Hotel();
+
+		h.add(new Room("room1"));
+		h.add(new Room("room1"));
+	}
+	
+	@Test(expected = RoomNameAlreadyExistsException.class)
+	public void constructorShouldThrowRNAE() {
+		new Hotel(new Room(1, 130l, "room1"), new Room(2, 180l, "room2"), new Room(2, 180l, "room2"));
+	}
 
 	@Test
 	public void searchEmptyHotel() {

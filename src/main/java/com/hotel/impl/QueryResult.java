@@ -7,6 +7,14 @@ public class QueryResult {
 
 	private List<Room> rooms;
 	private long price = 0l;
+	
+	public QueryResult(Room... rooms) {		
+		for (Room room : rooms) {
+			this.rooms.add(room);
+		}
+	}
+	
+	public QueryResult() { }
 
 	/**/
 	public List<Room> rooms(){

@@ -8,7 +8,6 @@ import java.util.Deque;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import com.hotel.exceptions.RoomNameAlreadyExistsException;
 import com.hotel.interfaces.HotelInt;
@@ -20,6 +19,12 @@ public class Hotel implements HotelInt {
 	private List<Room> rooms = new ArrayList<Room>();
 
 	private List<Season> seasons = new ArrayList<Season>();
+	
+	public Hotel(Room... rooms) {
+		for (Room room : rooms) {
+			add(room);
+		}
+	}
 
 	public void add(Room room) {
 
