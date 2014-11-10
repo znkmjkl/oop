@@ -1,6 +1,7 @@
 package com.hotel.impl;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class QueryResult {
@@ -52,8 +53,8 @@ public class QueryResult {
 		if (r.getRooms().size() != this.getRooms().size())
 			return false;
 
-		Collections.sort(r.getRooms(), new Hotel().new RoomComparator());
-		Collections.sort(this.getRooms(), new Hotel().new RoomComparator());
+		Collections.sort(r.getRooms(), new RoomComparator());
+		Collections.sort(this.getRooms(), new RoomComparator());
 
 		for (int i = 0; i < r.getRooms().size(); i++) {
 			if (!r.getRooms().get(i).getName()
@@ -62,6 +63,18 @@ public class QueryResult {
 		}
 
 		return true;
+	}
+	
+	class RoomComparator implements Comparator<Room> {
+		public int compare(Room o1, Room o2) {
+			if (o1.getSize() > o2.getSize()) {
+				return -1;
+			} else if (o1.getSize() > o2.getSize()) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
 	}
 
 }

@@ -10,6 +10,13 @@ public class Reservation implements ReservationInt {
 	Calendar start;
 	Calendar end;
 	Room room;
+	
+	public Reservation(Person person, Calendar start, Calendar end, Room room) {
+		this.person = person;
+		this.start = start;
+		this.end = end;
+		this.room = room;
+	}
 
 	public Person getPerson() {
 		return person;
