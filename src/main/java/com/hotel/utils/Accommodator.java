@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -93,7 +94,7 @@ public class Accommodator {
 			}
 		}
 		
-		return getCheapest(okResults, resultsNr);
+		return getCheapest(new ArrayList<QueryResult>(new HashSet<QueryResult>(okResults)), resultsNr);
 	}
 	
 	private static List<QueryResult> getCheapest(List<QueryResult> results, int resultNr) {
@@ -110,6 +111,7 @@ public class Accommodator {
 				cheapest.add(all.pollFirst());
 			}
 		}
+		
 		return cheapest;
 	}
 	

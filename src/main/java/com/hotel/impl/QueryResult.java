@@ -1,7 +1,9 @@
 package com.hotel.impl;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 
 public class QueryResult {
@@ -9,7 +11,14 @@ public class QueryResult {
 	private List<Room> rooms;
 	private long price = 0l;
 	
-	public QueryResult(Room... rooms) {		
+	public QueryResult(long price, Room... rooms) {
+		
+		this.price = price;
+		
+		if (this.rooms == null) {
+			this.rooms = new ArrayList<Room>();
+		}
+		
 		for (Room room : rooms) {
 			this.rooms.add(room);
 		}
@@ -45,24 +54,17 @@ public class QueryResult {
 
 	@Override
 	public boolean equals(Object o) {
-		QueryResult r = (QueryResult) o;
-
-		if (r.getPrice() != this.getPrice())
-			return false;
-
-		if (r.getRooms().size() != this.getRooms().size())
-			return false;
-
-		Collections.sort(r.getRooms(), new RoomComparator());
-		Collections.sort(this.getRooms(), new RoomComparator());
-
-		for (int i = 0; i < r.getRooms().size(); i++) {
-			if (!r.getRooms().get(i).getName()
-					.equals(this.getRooms().get(i).getName()))
-				return false;
+		if (o instanceof QueryResult) {
+		
+			QueryResult r = (QueryResult) o;
+	
+			if (r.getPrice() != this.getPrice()) return false;
+			if (r.getRooms().size() != this.getRooms().size()) return false;
+			
+			return new HashSet<Room>(r.getRooms()).equals(new HashSet<Room>(this.getRooms()));
 		}
-
-		return true;
+		
+		return false;
 	}
 	
 	class RoomComparator implements Comparator<Room> {
@@ -75,6 +77,20 @@ public class QueryResult {
 				return 0;
 			}
 		}
+	}
+	
+	@Override
+	public int hashCode() {
+		
+		int hash = 0;
+		
+		if(getRooms() != null) {
+			for(Room room : getRooms()) {
+				hash += room.hashCode();
+			}
+		}
+		
+		return hash;
 	}
 
 }

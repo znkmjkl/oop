@@ -9,7 +9,7 @@ public class Room {
 	private int size;
 	private Person person;
 	//private long price = 0l;
-	private Map<String, Long> price = new HashMap<String, Long>();
+	private Map<String, Long> seasonPrices = new HashMap<String, Long>();
 	
 	public Room(int size) {
 		this.size = size;		
@@ -21,7 +21,7 @@ public class Room {
 	
 	public Room(int size, long price, String name) {
 		this.size = size;
-		this.price.put("normal", price);
+		this.seasonPrices.put("normal", price);
 		this.name = name;
 	}
 
@@ -62,14 +62,14 @@ public class Room {
 	}
 
 	public void setPrice(String seasonName, long price) {
-		this.price.put(seasonName, price);
+		this.seasonPrices.put(seasonName, price);
 	}
 
 	public long getPrice() {
-		return price.get("normal");
+		return seasonPrices.get("normal");
 	}
 	public long getPrice(String seasonName){
-		return price.get(seasonName);
+		return seasonPrices.get(seasonName);
 	}
 
 	@Override
