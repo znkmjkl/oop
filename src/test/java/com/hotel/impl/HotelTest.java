@@ -25,31 +25,33 @@ public class HotelTest {
 	private Hotel hotel;
 	private Hotel emptyHotel;
 	
-	Calendar start;
-	Calendar end;
+	private Calendar start;
+	private Calendar end;
+	
+	private Person person;
 	
 	private static final Object[] getQueryResults() {
-		
+
 		List<QueryResult> queryResults1 = new ArrayList<QueryResult>();
 		queryResults1.add(new QueryResult(130l*4, new Room("room1")));
 		queryResults1.add(new QueryResult(180l*4, new Room("room2")));
 		queryResults1.add(new QueryResult(200l*4, new Room("room22")));
-		
+
 		List<QueryResult> queryResults2 = new ArrayList<QueryResult>();
 		queryResults2.add(new QueryResult(180l*4, new Room("room2")));
 		queryResults2.add(new QueryResult(200l*4, new Room("room22")));
 		queryResults2.add(new QueryResult(240l*4, new Room("room3")));
-		
+
 		List<QueryResult> queryResults3 = new ArrayList<QueryResult>();
 		queryResults3.add(new QueryResult(240l*4, new Room("room3")));
 		queryResults3.add(new QueryResult(310l*4, new Room("room2"), new Room("room1")));
 		queryResults3.add(new QueryResult(320l*4, new Room("room4")));
-		
+
 		List<QueryResult> queryResults4 = new ArrayList<QueryResult>();
 		queryResults4.add(new QueryResult(320l*4, new Room("room4")));
 		queryResults4.add(new QueryResult(370l*4, new Room("room3"), new Room("room1")));
 		queryResults4.add(new QueryResult(380l*4, new Room("room22"), new Room("room2")));
-		
+
 		return $(
 			$(1, queryResults1),
 			$(2, queryResults2),
@@ -58,6 +60,36 @@ public class HotelTest {
 		);
 	}
 	
+	private static final Object[] getQueryResultsFromHotelWithReservations() {
+
+		List<QueryResult> queryResults1 = new ArrayList<QueryResult>();
+		queryResults1.add(new QueryResult(180l*2, new Room("room2")));
+		queryResults1.add(new QueryResult(200l*2, new Room("room22")));
+		queryResults1.add(new QueryResult(240l*2, new Room("room3")));
+		
+		List<QueryResult> queryResults2 = new ArrayList<QueryResult>();
+		queryResults2.add(new QueryResult(180l*2, new Room("room2")));
+		queryResults2.add(new QueryResult(200l*2, new Room("room22")));
+		queryResults2.add(new QueryResult(240l*2, new Room("room3")));
+		
+		List<QueryResult> queryResults3 = new ArrayList<QueryResult>();
+		queryResults3.add(new QueryResult(240l*2, new Room("room3")));
+		queryResults3.add(new QueryResult(320l*2, new Room("room4")));
+		queryResults3.add(new QueryResult(380l*2, new Room("room2"), new Room("room22")));
+		
+		List<QueryResult> queryResults4 = new ArrayList<QueryResult>();
+		queryResults4.add(new QueryResult(560l*2, new Room("room4"), new Room("room3")));
+		queryResults4.add(new QueryResult(620l*2, new Room("room3"), new Room("room2"), new Room("room22")));
+		queryResults4.add(new QueryResult(700l*2, new Room("room4"), new Room("room2"), new Room("room22")));
+
+		return $(
+			$(1, queryResults1),
+			$(2, queryResults2),
+			$(3, queryResults3),
+			$(7, queryResults4)
+		);
+	}
+
 	@Before
 	public void setUp() {
 		hotel = new Hotel(new Room(1, 130l, "room1"), new Room(2, 180l, "room2"), new Room(2, 200l, "room22"), new Room(3, 240l, "room3"), new Room(4, 320l, "room4"));
@@ -67,6 +99,8 @@ public class HotelTest {
 		end = Calendar.getInstance();
 		start.set(2014, 6, 18);
 		end.set(2014, 6, 22);
+		
+		person = new Person("Mateusz", "Jancarz", "mati@mati.pl", "Krakow 15");
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
@@ -99,9 +133,7 @@ public class HotelTest {
 	//Simple check - without any reservations
 	@Test
 	@Parameters(method = "getQueryResults")
-	public void searchForCheapestQueryResult(int peopleNr, List<QueryResult> queryResults) {
-		
-		//Simple check - without any reservations
+	public void searchForCheapestQueryResults(int peopleNr, List<QueryResult> queryResults) {
 		
 		//Check queryResults sizes
 		Assert.assertEquals(queryResults.size(), hotel.findFreeRooms(start, end, peopleNr).size());
@@ -109,33 +141,22 @@ public class HotelTest {
 		//Check room lists
 		Assert.assertEquals(true, hotel.findFreeRooms(start, end, peopleNr).equals(queryResults));
 	}
-
+	
 	@Test
-	public void searchRoom() {
-
-		Room room = new Room(2, 200L, "room1");
-
-		emptyHotel.add(room);
-
-		QueryResult qr = new QueryResult();
-		qr.setPrice(200);
-
-		List<Room> rs = new ArrayList<Room>();
-		rs.add(room);
-
-		qr.setRooms(rs);
-
-		List<QueryResult> list = new ArrayList<QueryResult>();
-		list.add(qr);
-
-		List<QueryResult> result = emptyHotel.findFreeRooms(start, end, 2);
-
-		Assert.assertEquals(1, result.size());
-
-		Assert.assertEquals(1, result.get(0).getRooms().size());
-
+	@Parameters(method = "getQueryResultsFromHotelWithReservations")
+	public void searchForCheapestQueryResultsInHotelWithReservations(int peopleNr, List<QueryResult> queryResults) {
+		
+		end.set(2014, 6, 20);
+		hotel.reserve(start, end, new QueryResult(0l, new Room("room1")), person);
+		
+		//Check queryResults sizes
+		Assert.assertEquals(queryResults.size(), hotel.findFreeRooms(start, end, peopleNr).size());
+		
+		//Check room lists
+		Assert.assertEquals(true, hotel.findFreeRooms(start, end, peopleNr).equals(queryResults));
 	}
-
+	
+	//Mozna wywalic (albo przerobic) i najwyzej dodac pare parametrow to tych wyzej
 	@Test
 	public void reserve() {
 		Hotel hotel = new Hotel();

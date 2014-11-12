@@ -1,12 +1,10 @@
 package com.hotel.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
-public class QueryResult {
+public class QueryResult implements Comparable<QueryResult> {
 
 	private List<Room> rooms;
 	private long price = 0l;
@@ -67,18 +65,6 @@ public class QueryResult {
 		return false;
 	}
 	
-	class RoomComparator implements Comparator<Room> {
-		public int compare(Room o1, Room o2) {
-			if (o1.getSize() > o2.getSize()) {
-				return -1;
-			} else if (o1.getSize() > o2.getSize()) {
-				return 1;
-			} else {
-				return 0;
-			}
-		}
-	}
-	
 	@Override
 	public int hashCode() {
 		
@@ -91,6 +77,11 @@ public class QueryResult {
 		}
 		
 		return hash;
+	}
+
+	@Override
+	public int compareTo(QueryResult o) {
+		return Long.compare(this.getPrice(), o.getPrice());
 	}
 
 }

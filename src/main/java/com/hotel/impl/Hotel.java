@@ -26,8 +26,7 @@ public class Hotel implements HotelInt {
 	public void add(Room room) {
 
 		if (rooms.contains(room)) {
-			throw new RoomNameAlreadyExistsException("Room name is already taken ["
-					+ room.getName() + "]");
+			throw new RoomNameAlreadyExistsException("Room name is already taken [" + room.getName() + "]");
 		}
 
 		rooms.add(room);
@@ -70,7 +69,7 @@ public class Hotel implements HotelInt {
 
 		for (Reservation res : getReservations()) {
 			if ((startMs <= res.getStart().getTimeInMillis() && endMs >= res.getStart().getTimeInMillis())
-				|| (endMs <= res.getEnd().getTimeInMillis() && startMs >= res.getEnd().getTimeInMillis())) {
+				|| (startMs <= res.getEnd().getTimeInMillis() && endMs >= res.getEnd().getTimeInMillis())) {
 				if (allRooms.contains(res.getRoom())) {
 					allRooms.remove(res.getRoom());
 				}
@@ -87,7 +86,8 @@ public class Hotel implements HotelInt {
 	public void setReservations(List<Reservation> reservations) {
 		this.reservations = reservations;
 	}
-
+	
+	//TODO throw IAE if start > end
 	public void reserve(Calendar start, Calendar end, QueryResult toReserve, Person person) {
 		for (Room room : toReserve.getRooms()) {
 			if (checkRoomAvailable(start, end, room)) {

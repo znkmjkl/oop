@@ -1,10 +1,10 @@
 package com.hotel;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-import com.hotel.impl.*;
+import com.hotel.impl.Hotel;
+import com.hotel.impl.Room;
 
 public class App {
 
