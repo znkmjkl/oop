@@ -91,7 +91,7 @@ public class Room implements Comparable<Room> {
 		return this.name != null ? this.name.hashCode() : 0;
 	}
 
-	@Override
+	
 	public int compareTo(Room o) {
 		if (this.getSize() > o.getSize()) {
 			return -1;

@@ -240,4 +240,48 @@ public class HotelTest {
 		Assert.assertEquals("room4", hotel.getReservations().get(3).getRoom().name());
 
 	}
+	
+	@Test
+	public void seasons(){
+		Hotel hotel = new Hotel();
+		Room r1 = new Room(2, 130l, "room1");
+		r1.setPrice("spring", 150l);
+		r1.setPrice("winter", 180L);
+		
+		Calendar start1 = Calendar.getInstance();
+		Calendar end1 = Calendar.getInstance();
+		start1.set(2014, 5, 30);
+		end1.set(2014, 7, 31);
+		
+			
+		Season s1 = new Season();
+		s1.setName("spring");
+		s1.setStart(start1);
+		s1.setEnd(end1);
+		
+		Calendar start2 = Calendar.getInstance();
+		Calendar end2 = Calendar.getInstance();
+		start2.set(2014, 8, 3);
+		end2.set(2014, 8, 10);
+		
+		Season s2 = new Season();
+		s2.setName("winter");
+		s2.setStart(start2);
+		s2.setEnd(end2);
+		
+		hotel.add(r1);
+		hotel.addSeason(s1);
+		hotel.addSeason(s2);
+		
+		Calendar start = Calendar.getInstance();
+		Calendar end = Calendar.getInstance();
+		start.set(2014, 7,29);
+		end.set(2014, 8, 5);		
+		
+		Assert.assertEquals(1050L, hotel.getRoomPrice(r1, start, end));
+		
+		
+
+	    
+	}
 }

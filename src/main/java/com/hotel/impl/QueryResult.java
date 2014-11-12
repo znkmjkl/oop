@@ -79,7 +79,7 @@ public class QueryResult implements Comparable<QueryResult> {
 		return hash;
 	}
 
-	@Override
+	
 	public int compareTo(QueryResult o) {
 		return Long.compare(this.getPrice(), o.getPrice());
 	}
