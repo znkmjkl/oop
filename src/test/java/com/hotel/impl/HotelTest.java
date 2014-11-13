@@ -245,8 +245,7 @@ public class HotelTest {
 	public void seasons(){
 		Hotel hotel = new Hotel();
 		Room r1 = new Room(2, 130l, "room1");
-		r1.setPrice("spring", 150l);
-		r1.setPrice("winter", 180L);
+		
 		
 		Calendar start1 = Calendar.getInstance();
 		Calendar end1 = Calendar.getInstance();
@@ -269,6 +268,8 @@ public class HotelTest {
 		s2.setStart(start2);
 		s2.setEnd(end2);
 		
+		r1.setPrice(s1, 150l);
+		r1.setPrice(s2, 180L);
 		hotel.add(r1);
 		hotel.addSeason(s1);
 		hotel.addSeason(s2);
@@ -278,7 +279,7 @@ public class HotelTest {
 		start.set(2014, 7,29);
 		end.set(2014, 8, 5);		
 		
-		Assert.assertEquals(1050L, hotel.getRoomPrice(r1, start, end));
+		Assert.assertEquals(1050L, r1.getRoomPrice(start, end));
 		
 		
 

@@ -106,62 +106,6 @@ public class Hotel implements HotelInt {
 		seasons.add(s);
 	}
 
-	public long getRoomPrice(Room room, Calendar start, Calendar end) {
-		
-		long totalPrice = 0;
-		long nights = 0;		
-		long diff = end.getTimeInMillis() - start.getTimeInMillis();
-		diff = (diff % 10 == 9) ? diff+1 : diff;
-		long remainingNights = diff / divider;
-		
-		for(Season s : seasons){			
-				/* kiedy czesc rezerwacji jest na poczatku sezonu */
-			if(end.getTimeInMillis() >= s.getStart().getTimeInMillis() && start.getTimeInMillis() < s.getStart().getTimeInMillis()
-				&& end.getTimeInMillis() < s.getEnd().getTimeInMillis()){
-				
-				diff = end.getTimeInMillis() - s.getStart().getTimeInMillis();
-				diff = (diff % 10 == 9) ? diff+1 : diff;
-				nights = diff / divider;
-			
-				/* kiedy rezerwacja jest w sezonie lub pokrywa caly sezon */
-			} else if (start.getTimeInMillis() >= s.getStart().getTimeInMillis() && end.getTimeInMillis() <= s.getEnd().getTimeInMillis()){					
-				
-				diff = end.getTimeInMillis() - start.getTimeInMillis();
-				diff = (diff % 10 == 9) ? diff+1 : diff;
-				nights = diff / divider;
-		
-				/* kiedy rezerwacja rozpoczyna sie pod koniec sezonu a potem jest poza  */
-			} else if (start.getTimeInMillis() >= s.getStart().getTimeInMillis() && end.getTimeInMillis() > s.getEnd().getTimeInMillis() 
-				&& start.getTimeInMillis() < s.getEnd().getTimeInMillis()){
-					
-				diff = s.getEnd().getTimeInMillis() - start.getTimeInMillis();
-				diff = (diff % 10 == 9) ? diff+1 : diff;
-				nights = diff / divider;
-			
-				/* kiedy rezerwacja jest wieksza i pokrywa caly sezon */	
-			} else if (start.getTimeInMillis() < s.getStart().getTimeInMillis() && end.getTimeInMillis() > s.getEnd().getTimeInMillis()){
-					
-				diff = s.getEnd().getTimeInMillis() - s.getStart().getTimeInMillis();
-				diff = (diff % 10 == 9) ? diff+1 : diff;
-				nights = diff / divider;
-			
-			}
-			
-			try {
-				totalPrice += nights * room.getPrice(s.getName()); 
-			} catch(Exception NullPointerException){
-				totalPrice += nights * room.getPrice("normal");					
-			}
-				
-			remainingNights -= nights;
-			nights = 0;				
-					
-		}
-		totalPrice += remainingNights * room.getPrice("normal");
-		
-		//System.out.println("CENA CALKOWITA: " + totalPrice + " dla pokoju " + room.getName());
-		return totalPrice;
-	}
 
 	private boolean checkRoomAvailable(Calendar start, Calendar end, Room room) {
 		for (Room r : getAvailableRooms(start, end)) {

@@ -1,15 +1,18 @@
 package com.hotel.impl;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Room implements Comparable<Room> {
-
+	
+	private static final long divider = 24 * 60 * 60 * 1000;
 	private String name;
 	private int size;
 	private Person person;
+	
 	// private long price = 0l;
-	private Map<String, Long> seasonPrices = new HashMap<String, Long>();
+	private Map<Season, Long> seasonPrices = new HashMap<Season, Long>();
 
 	public Room(int size) {
 		this.size = size;
@@ -19,9 +22,11 @@ public class Room implements Comparable<Room> {
 		this.name = name;
 	}
 
-	public Room(int size, long price, String name) {
+	public Room(int size, long normalPrice, String name) {
 		this.size = size;
-		this.seasonPrices.put("normal", price);
+		Season season = new Season();
+		season.setName("normal");
+		this.seasonPrices.put(season, normalPrice);
 		this.name = name;
 	}
 
@@ -62,16 +67,76 @@ public class Room implements Comparable<Room> {
 		return this.person;
 	}
 
-	public void setPrice(String seasonName, long price) {
-		this.seasonPrices.put(seasonName, price);
+	public void setPrice(Season season, long price) {
+		this.seasonPrices.put(season, price);
 	}
 
 	public long getPrice() {
-		return seasonPrices.get("normal");
+		//return seasonPrices.get());
+		for(Season season : seasonPrices.keySet()){
+			if (season.getName().equals("normal"))
+				return seasonPrices.get(season);
+		}
+		return 0L;	
+		
 	}
 
-	public long getPrice(String seasonName) {
-		return seasonPrices.get(seasonName);
+	public long getPrice(Season season) {
+		return seasonPrices.get(season);
+	}
+	
+	public long getRoomPrice(Calendar start, Calendar end) {
+		
+		long totalPrice = 0;
+		long nights = 0;		
+		long diff = end.getTimeInMillis() - start.getTimeInMillis();
+		diff = (diff % 10 == 9) ? diff+1 : diff;
+		long remainingNights = diff / divider;
+		
+		for(Season s : seasonPrices.keySet()){		
+			if(s.getName().equals("normal"))
+				continue;
+				/* kiedy czesc rezerwacji jest na poczatku sezonu */
+			if(end.getTimeInMillis() >= s.getStart().getTimeInMillis() && start.getTimeInMillis() < s.getStart().getTimeInMillis()
+				&& end.getTimeInMillis() < s.getEnd().getTimeInMillis()){
+				
+				diff = end.getTimeInMillis() - s.getStart().getTimeInMillis();
+				diff = (diff % 10 == 9) ? diff+1 : diff;
+				nights = diff / divider;
+			
+				/* kiedy rezerwacja jest w sezonie lub pokrywa caly sezon */
+			} else if (start.getTimeInMillis() >= s.getStart().getTimeInMillis() && end.getTimeInMillis() <= s.getEnd().getTimeInMillis()){					
+				
+				diff = end.getTimeInMillis() - start.getTimeInMillis();
+				diff = (diff % 10 == 9) ? diff+1 : diff;
+				nights = diff / divider;
+		
+				/* kiedy rezerwacja rozpoczyna sie pod koniec sezonu a potem jest poza  */
+			} else if (start.getTimeInMillis() >= s.getStart().getTimeInMillis() && end.getTimeInMillis() > s.getEnd().getTimeInMillis() 
+				&& start.getTimeInMillis() < s.getEnd().getTimeInMillis()){
+					
+				diff = s.getEnd().getTimeInMillis() - start.getTimeInMillis();
+				diff = (diff % 10 == 9) ? diff+1 : diff;
+				nights = diff / divider;
+			
+				/* kiedy rezerwacja jest wieksza i pokrywa caly sezon */	
+			} else if (start.getTimeInMillis() < s.getStart().getTimeInMillis() && end.getTimeInMillis() > s.getEnd().getTimeInMillis()){
+					
+				diff = s.getEnd().getTimeInMillis() - s.getStart().getTimeInMillis();
+				diff = (diff % 10 == 9) ? diff+1 : diff;
+				nights = diff / divider;
+			
+			}
+			
+			totalPrice += nights * getPrice(s);				
+			remainingNights -= nights;
+			nights = 0;				
+					
+		}
+		totalPrice += remainingNights * getPrice();
+		
+		//System.out.println("CENA CALKOWITA: " + totalPrice + " dla pokoju " + room.getName());
+		return totalPrice;
 	}
 
 	@Override
