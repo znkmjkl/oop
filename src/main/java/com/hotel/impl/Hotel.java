@@ -58,7 +58,7 @@ public class Hotel implements HotelInt {
 	public List<QueryResult> findFreeRooms(Calendar start, Calendar end, int n_persons) {
 
 		long diffs = end.getTimeInMillis() - start.getTimeInMillis();
-		long nights = diffs / (24 * 60 * 60 * 1000);
+		long nights = diffs / divider;
 		
 		return Accommodator.getCheapestQueryResults(n_persons, nights, 3, start, end, getRooms(), getAvailableRooms(start, end));
 	}

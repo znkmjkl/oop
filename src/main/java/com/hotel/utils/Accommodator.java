@@ -87,7 +87,7 @@ public class Accommodator {
 
 			if (isResultOk) {
 				for (Room r1 : qr.getRooms()) {
-					qr.setPrice(qr.getPrice() + r1.getPrice() * nights);
+					qr.setPrice(qr.getPrice() + r1.getRoomPrice(start, end));
 				}
 
 				okResults.add(qr);
