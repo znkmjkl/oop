@@ -6,12 +6,11 @@ import java.util.Map;
 
 public class Room implements Comparable<Room> {
 	
+	//ta stala nie moze byc w getRoomPrice?
 	private static final long divider = 24 * 60 * 60 * 1000;
 	private String name;
 	private int size;
-	private Person person;
-	
-	// private long price = 0l;
+
 	private Map<Season, Long> seasonPrices = new HashMap<Season, Long>();
 
 	public Room(int size) {
@@ -59,14 +58,6 @@ public class Room implements Comparable<Room> {
 		this.size = size;
 	}
 
-	public void setPerson(Person person) {
-		this.person = person;
-	}
-
-	public Person getPerson() {
-		return this.person;
-	}
-
 	public void setPrice(Season season, long price) {
 		this.seasonPrices.put(season, price);
 	}
@@ -78,7 +69,7 @@ public class Room implements Comparable<Room> {
 				return seasonPrices.get(season);
 		}
 		return 0L;	
-		
+
 	}
 
 	public long getPrice(Season season) {
@@ -161,10 +152,10 @@ public class Room implements Comparable<Room> {
 	public int compareTo(Room o) {
 		if (this.getSize() > o.getSize()) {
 			return -1;
-		} else if (this.getSize() > o.getSize()) {
+		} else if (this.getSize() < o.getSize()) {
 			return 1;
 		} else {
-			return 0;
+			return this.getName().compareTo(o.getName());
 		}
 	}
 }

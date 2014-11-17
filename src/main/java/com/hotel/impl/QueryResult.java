@@ -78,9 +78,29 @@ public class QueryResult implements Comparable<QueryResult> {
 		
 		return hash;
 	}
-
 	
+	
+
+	//Sortowanie QueryResult:
+	//1. Cena
+	//2. Ilosc pokoi
+	//3. Nazwa pokoi (alfabetycznie w przypadku pierwszego wystapienia roznych nazw w liscie pokoi)
 	public int compareTo(QueryResult o) {
+		
+		if(this.getPrice() != o.getPrice()) return Long.compare(this.getPrice(), o.getPrice());
+		
+		if(this.getRooms().size() != o.getRooms().size()) return Long.compare(this.getRooms().size(), o.getRooms().size());
+		
+		if (o.getRooms() != null && !o.getRooms().isEmpty()) {
+				return this.getRooms().get(this.getRooms().size()-1).getName().compareTo(o.getRooms().get(o.getRooms().size()-1).getName());
+		}
+		
+		for(int i = 0; i < this.getRooms().size(); i++) {
+			if(!this.getRooms().get(i).getName().equals(o.getRooms().get(i).getName())) {
+				return this.getRooms().get(i).getName().compareTo(o.getRooms().get(i).getName());
+			}
+		}
+		
 		return Long.compare(this.getPrice(), o.getPrice());
 	}
 

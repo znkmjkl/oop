@@ -23,6 +23,7 @@ import com.hotel.impl.Room;
 public class HotelTest {
 	
 	private Hotel hotel;
+	private Hotel hotel2;
 	private Hotel emptyHotel;
 	
 	private Calendar start;
@@ -33,16 +34,19 @@ public class HotelTest {
 	private static final Object[] getQueryResults() {
 
 		List<QueryResult> queryResults1 = new ArrayList<QueryResult>();
-		queryResults1.add(new QueryResult(130l*4, new Room("room1")));
+		queryResults1.add(new QueryResult(120l*4, new Room("room1")));
 
 		List<QueryResult> queryResults2 = new ArrayList<QueryResult>();
 		queryResults2.add(new QueryResult(180l*4, new Room("room2")));
+		queryResults2.add(new QueryResult(180l*4, new Room("room22")));
 
 		List<QueryResult> queryResults3 = new ArrayList<QueryResult>();
-		queryResults3.add(new QueryResult(240l*4, new Room("room3")));
+		queryResults3.add(new QueryResult(300l*4, new Room("room4")));
+		queryResults3.add(new QueryResult(300l*4, new Room("room1"), new Room("room2")));
+		queryResults3.add(new QueryResult(300l*4, new Room("room1"), new Room("room22")));
 
 		List<QueryResult> queryResults4 = new ArrayList<QueryResult>();
-		queryResults4.add(new QueryResult(320l*4, new Room("room4")));
+		queryResults4.add(new QueryResult(300l*4, new Room("room4")));
 
 		return $(
 			$(1, queryResults1),
@@ -77,6 +81,7 @@ public class HotelTest {
 	@Before
 	public void setUp() {
 		hotel = new Hotel(new Room(1, 130l, "room1"), new Room(2, 180l, "room2"), new Room(2, 200l, "room22"), new Room(3, 240l, "room3"), new Room(4, 320l, "room4"));
+		hotel2 = new Hotel(new Room(1, 120l, "room1"), new Room(2, 180l, "room2"), new Room(2, 180l, "room22"), new Room(4, 300l, "room4"));
 		emptyHotel = new Hotel();
 		
 		start = Calendar.getInstance();
@@ -119,11 +124,9 @@ public class HotelTest {
 	@Parameters(method = "getQueryResults")
 	public void searchForCheapestQueryResults(int peopleNr, List<QueryResult> queryResults) {
 		
-		//Check queryResults sizes
-		Assert.assertEquals(queryResults.size(), hotel.findFreeRooms(start, end, peopleNr).size());
+		List<QueryResult> qrs = hotel2.findFreeRooms(start, end, peopleNr);
 		
-		//Check room lists
-		Assert.assertEquals(true, hotel.findFreeRooms(start, end, peopleNr).equals(queryResults));
+		Assert.assertEquals(true, qrs.equals(queryResults));
 	}
 	
 	@Test
@@ -132,15 +135,11 @@ public class HotelTest {
 		
 		end.set(2014, 6, 20);
 		hotel.reserve(start, end, new QueryResult(0l, new Room("room1")), person);
-		
-		//Check queryResults sizes
-		Assert.assertEquals(queryResults.size(), hotel.findFreeRooms(start, end, peopleNr).size());
-		
-		//Check room lists
+
 		Assert.assertEquals(true, hotel.findFreeRooms(start, end, peopleNr).equals(queryResults));
 	}
-	
-	//Mozna wywalic (albo przerobic) i najwyzej dodac pare parametrow to tych wyzej
+
+	//TODO nadpisaæ equals() dla Person i przerobiæ test (uzyc assertEquals na obiektach Person i dodac parametryzacje)
 	@Test
 	public void reserve() {
 		Hotel hotel = new Hotel();
