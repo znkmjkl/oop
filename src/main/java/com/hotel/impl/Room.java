@@ -151,6 +151,7 @@ public class Room implements Comparable<Room> {
 		return false;
 	}
 
+
 	@Override
 	public int hashCode() {
 		return this.name != null ? this.name.hashCode() : 0;

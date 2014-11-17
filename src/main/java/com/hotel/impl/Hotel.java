@@ -16,8 +16,9 @@ public class Hotel implements HotelInt {
 	private List<Reservation> reservations = new ArrayList<Reservation>();
 
 	private List<Room> rooms = new ArrayList<Room>();
-
-	private List<Season> seasons = new ArrayList<Season>();
+	
+	//TODO mozna traktowac jako liste podstawowych sezonow, aby wygodniej dodac je do wiekszej liczby pokoi
+	private List<Season> commonSeasons = new ArrayList<Season>();
 	
 	public Hotel(Room... rooms) {
 		for (Room room : rooms) {
@@ -60,7 +61,7 @@ public class Hotel implements HotelInt {
 		long diffs = end.getTimeInMillis() - start.getTimeInMillis();
 		long nights = diffs / divider;
 		
-		return Accommodator.getCheapestQueryResults(n_persons, nights, 3, start, end, getRooms(), getAvailableRooms(start, end));
+		return Accommodator.getCheapestQueryResults(n_persons, nights, 1, start, end, getRooms(), getAvailableRooms(start, end));
 	}
 
 	public List<Room> getAvailableRooms(Calendar start, Calendar end) {
@@ -98,12 +99,12 @@ public class Hotel implements HotelInt {
 		}
 	}
 
-	public List<Season> getSeasons() {
-		return seasons;
+	public List<Season> getCommonSeasons() {
+		return commonSeasons;
 	}
 
 	public void addSeason(Season s) {
-		seasons.add(s);
+		commonSeasons.add(s);
 	}
 
 

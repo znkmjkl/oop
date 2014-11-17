@@ -34,23 +34,15 @@ public class HotelTest {
 
 		List<QueryResult> queryResults1 = new ArrayList<QueryResult>();
 		queryResults1.add(new QueryResult(130l*4, new Room("room1")));
-		queryResults1.add(new QueryResult(180l*4, new Room("room2")));
-		queryResults1.add(new QueryResult(200l*4, new Room("room22")));
 
 		List<QueryResult> queryResults2 = new ArrayList<QueryResult>();
 		queryResults2.add(new QueryResult(180l*4, new Room("room2")));
-		queryResults2.add(new QueryResult(200l*4, new Room("room22")));
-		queryResults2.add(new QueryResult(240l*4, new Room("room3")));
 
 		List<QueryResult> queryResults3 = new ArrayList<QueryResult>();
 		queryResults3.add(new QueryResult(240l*4, new Room("room3")));
-		queryResults3.add(new QueryResult(310l*4, new Room("room2"), new Room("room1")));
-		queryResults3.add(new QueryResult(320l*4, new Room("room4")));
 
 		List<QueryResult> queryResults4 = new ArrayList<QueryResult>();
 		queryResults4.add(new QueryResult(320l*4, new Room("room4")));
-		queryResults4.add(new QueryResult(370l*4, new Room("room3"), new Room("room1")));
-		queryResults4.add(new QueryResult(380l*4, new Room("room22"), new Room("room2")));
 
 		return $(
 			$(1, queryResults1),
@@ -64,23 +56,15 @@ public class HotelTest {
 
 		List<QueryResult> queryResults1 = new ArrayList<QueryResult>();
 		queryResults1.add(new QueryResult(180l*2, new Room("room2")));
-		queryResults1.add(new QueryResult(200l*2, new Room("room22")));
-		queryResults1.add(new QueryResult(240l*2, new Room("room3")));
 		
 		List<QueryResult> queryResults2 = new ArrayList<QueryResult>();
 		queryResults2.add(new QueryResult(180l*2, new Room("room2")));
-		queryResults2.add(new QueryResult(200l*2, new Room("room22")));
-		queryResults2.add(new QueryResult(240l*2, new Room("room3")));
 		
 		List<QueryResult> queryResults3 = new ArrayList<QueryResult>();
 		queryResults3.add(new QueryResult(240l*2, new Room("room3")));
-		queryResults3.add(new QueryResult(320l*2, new Room("room4")));
-		queryResults3.add(new QueryResult(380l*2, new Room("room2"), new Room("room22")));
 		
 		List<QueryResult> queryResults4 = new ArrayList<QueryResult>();
 		queryResults4.add(new QueryResult(560l*2, new Room("room4"), new Room("room3")));
-		queryResults4.add(new QueryResult(620l*2, new Room("room3"), new Room("room2"), new Room("room22")));
-		queryResults4.add(new QueryResult(700l*2, new Room("room4"), new Room("room2"), new Room("room22")));
 
 		return $(
 			$(1, queryResults1),
@@ -240,49 +224,5 @@ public class HotelTest {
 		Assert.assertEquals("room4", hotel.getReservations().get(3).getRoom().name());
 
 	}
-	
-	@Test
-	public void seasons(){
-		Hotel hotel = new Hotel();
-		Room r1 = new Room(2, 130l, "room1");
-		
-		
-		Calendar start1 = Calendar.getInstance();
-		Calendar end1 = Calendar.getInstance();
-		start1.set(2014, 5, 30);
-		end1.set(2014, 7, 31);
-		
-			
-		Season s1 = new Season();
-		s1.setName("spring");
-		s1.setStart(start1);
-		s1.setEnd(end1);
-		
-		Calendar start2 = Calendar.getInstance();
-		Calendar end2 = Calendar.getInstance();
-		start2.set(2014, 8, 3);
-		end2.set(2014, 8, 10);
-		
-		Season s2 = new Season();
-		s2.setName("winter");
-		s2.setStart(start2);
-		s2.setEnd(end2);
-		
-		r1.setPrice(s1, 150l);
-		r1.setPrice(s2, 180L);
-		hotel.add(r1);
-		hotel.addSeason(s1);
-		hotel.addSeason(s2);
-		
-		Calendar start = Calendar.getInstance();
-		Calendar end = Calendar.getInstance();
-		start.set(2014, 7,29);
-		end.set(2014, 8, 5);		
-		
-		Assert.assertEquals(1050L, r1.getRoomPrice(start, end));
-		
-		
 
-	    
-	}
 }
