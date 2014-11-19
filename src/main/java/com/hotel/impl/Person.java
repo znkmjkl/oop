@@ -47,4 +47,19 @@ public class Person {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Person) {
+			Person p = (Person) o;
+
+			if (p.getFirstName().equals(this.getFirstName())
+				&& p.getSecondName().equals(this.getSecondName())
+				&& p.getAddress().equals(this.getAddress())
+				&& p.getEmail().equals(this.getEmail()))
+				
+				return true;
+		}
+
+		return false;
+	}
 }

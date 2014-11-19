@@ -139,7 +139,7 @@ public class HotelTest {
 		Assert.assertEquals(true, hotel.findFreeRooms(start, end, peopleNr).equals(queryResults));
 	}
 
-	//TODO nadpisaæ equals() dla Person i przerobiæ test (uzyc assertEquals na obiektach Person i dodac parametryzacje)
+	//TODO nadpisaï¿½ equals() dla Person i przerobiï¿½ test (uzyc assertEquals na obiektach Person i dodac parametryzacje)
 	@Test
 	public void reserve() {
 		Hotel hotel = new Hotel();
@@ -180,42 +180,28 @@ public class HotelTest {
 		start.set(2014, 6, 18);
 		end.set(2014, 6, 22);
 		long diff = (end.getTimeInMillis() - start.getTimeInMillis()) / (24 * 60 * 60 * 1000);
-		long price = (r1.getPrice() + r3.getPrice()) * diff;
 
+		long price = (r1.getPrice() + r3.getPrice()) * diff;
 		List<QueryResult> result = hotel.findFreeRooms(start, end, 3);
 		Assert.assertEquals(price, result.get(0).getPrice());
 		hotel.reserve(start, end, result.get(0), p);
 		Assert.assertEquals(2, hotel.getReservations().size());
-		Assert.assertEquals("Jan", hotel.getReservations().get(0).getPerson().getFirstName());
-		Assert.assertEquals("Nowak", hotel.getReservations().get(0).getPerson().getSecondName());
-		Assert.assertEquals("jan_nowak@gmail.com", hotel.getReservations().get(0).getPerson()
-				.getEmail());
-		Assert.assertEquals("Krakow, ul. Nowakowska 31a", hotel.getReservations().get(0)
-				.getPerson().getAddress());
-
+		Assert.assertTrue(p.equals(hotel.getReservations().get(0).getPerson()));
+	
 		long price2 = r2.getPrice() * diff;
 		List<QueryResult> result2 = hotel.findFreeRooms(start, end, 2);
 		Assert.assertEquals(price2, result2.get(0).getPrice());
 		hotel.reserve(start, end, result2.get(0), p2);
-		Assert.assertEquals(3, hotel.getReservations().size());
-		Assert.assertEquals("Tomasz", hotel.getReservations().get(2).getPerson().getFirstName());
-		Assert.assertEquals("Poznanski", hotel.getReservations().get(2).getPerson().getSecondName());
-		Assert.assertEquals("tomasz_poznanski@gmail.com", hotel.getReservations().get(2)
-				.getPerson().getEmail());
-		Assert.assertEquals("Wroclaw, ul. Prokocimska 28n", hotel.getReservations().get(2)
-				.getPerson().getAddress());
+		Assert.assertEquals(3, hotel.getReservations().size());		
+		Assert.assertTrue(p2.equals(hotel.getReservations().get(2).getPerson()));		
 
 		long price3 = r4.getPrice() * diff;
-		List<QueryResult> result3 = hotel.findFreeRooms(start, end, 3);
+		List<QueryResult> result3 = hotel.findFreeRooms(start, end, 3);		
 		Assert.assertEquals(price3, result3.get(0).getPrice());
-		hotel.reserve(start, end, result3.get(0), p3);
+		hotel.reserve(start, end, result3.get(0), p3);		
 		Assert.assertEquals(4, hotel.getReservations().size());
-		Assert.assertEquals("Adam", hotel.getReservations().get(3).getPerson().getFirstName());
-		Assert.assertEquals("Nawalka", hotel.getReservations().get(3).getPerson().getSecondName());
-		Assert.assertEquals("adam_nawalka@pzpn.pl", hotel.getReservations().get(3).getPerson()
-				.getEmail());
-		Assert.assertEquals("Warszawa, ul. Powstancow 40c", hotel.getReservations().get(3)
-				.getPerson().getAddress());
+		Assert.assertTrue(p3.equals(hotel.getReservations().get(3).getPerson()));
+		
 
 		Assert.assertEquals("room1", hotel.getReservations().get(0).getRoom().name());
 		Assert.assertEquals("room3", hotel.getReservations().get(1).getRoom().name());
