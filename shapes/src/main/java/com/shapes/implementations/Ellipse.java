@@ -9,25 +9,25 @@ public class Ellipse implements Shape {
 	private Point2D center;
 	
 	//a, b - radius
-	double a;
-	double b;
-
-	public Point2D getCenter() {
-		return center;
+	float a;
+	float b;
+	
+	public Ellipse(float a, float b){
+		this.a = a;
+		this.b = b;
+		this.center = new Point2D.Float(0,0);
 	}
-	public void setCenter(Point2D center) {
-		this.center = center;
-	}
-	public double getA() {
+	
+	public float getA() {
 		return a;
 	}
-	public void setA(double a) {
+	public void setA(float a) {
 		this.a = a;
 	}
-	public double getB() {
+	public float getB() {
 		return b;
 	}
-	public void setB(double b) {
+	public void setB(float b) {
 		this.b = b;
 	}
 	

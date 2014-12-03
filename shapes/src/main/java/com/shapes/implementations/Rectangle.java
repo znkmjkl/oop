@@ -8,31 +8,25 @@ public class Rectangle implements Shape {
 	private Point2D center;
 	
 	//a - vertical, b - horizontal
-	private double a;
-	private double b;
+	private float a;
+	private float b;
 	
-	public Rectangle(Point2D center, double a, double b) {
-		this.center = center;
+	public Rectangle(float a, float b) {
+		this.center = new Point2D.Float(0,0);
 		this.a = a;
-		this.b = b;
+		this.b = b;		
 	}
-
-	public Point2D getCenter() {
-		return center;
-	}
-	public void setCenter(Point2D center) {
-		this.center = center;
-	}
+	
 	public double getA() {
 		return a;
 	}
-	public void setA(double a) {
+	public void setA(float a) {
 		this.a = a;
 	}
 	public double getB() {
 		return b;
 	}
-	public void setB(double b) {
+	public void setB(float b) {
 		this.b = b;
 	}
 	public boolean contains(float x, float y) {
