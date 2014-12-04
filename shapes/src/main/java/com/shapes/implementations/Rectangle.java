@@ -17,6 +17,12 @@ public class Rectangle implements Shape {
 		this.b = b;		
 	}
 	
+	public Rectangle(Point2D center, float a, float b) {
+		this.center = center;
+		this.a = a;
+		this.b = b;		
+	}
+	
 	public double getA() {
 		return a;
 	}
