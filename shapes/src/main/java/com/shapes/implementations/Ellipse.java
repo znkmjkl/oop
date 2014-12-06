@@ -7,8 +7,6 @@ import com.shapes.interfaces.Shape;
 public class Ellipse implements Shape {
 
 	private Point2D center;
-	
-	//a, b - radius
 	float a;
 	float b;
 	
@@ -17,23 +15,9 @@ public class Ellipse implements Shape {
 		this.b = b;
 		this.center = new Point2D.Float(0,0);
 	}
-	
-	public float getA() {
-		return a;
-	}
-	public void setA(float a) {
-		this.a = a;
-	}
-	public float getB() {
-		return b;
-	}
-	public void setB(float b) {
-		this.b = b;
-	}	
 
 	public boolean contains(float x, float y) {		
-		double res =(x*x) / (a*a) + ( (y*y) / (b*b) );
-		System.out.println(res);
+		double res =((x/a)*(x/a)) + ( (y/b)*(y/b) );		
 		if (res <= 1)
 			return true;		
 		return false;

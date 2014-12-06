@@ -15,8 +15,7 @@ public class Difference implements Shape {
 	public boolean contains(float x, float y) {		
 		if(shape1.contains(x, y) && shape2.contains(x, y)){
 			return false;
-		} else if(shape1.contains(x, y)){
-			System.out.println("okok");
+		} else if(shape1.contains(x, y)){			
 			return true;
 		}
 		return false;		 

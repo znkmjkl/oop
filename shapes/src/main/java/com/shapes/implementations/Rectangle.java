@@ -37,8 +37,8 @@ public class Rectangle implements Shape {
 	}
 	public boolean contains(float x, float y) {
 		
-		double halfA = a/2;
-		double halfB = b/2; 
+		double halfA = b/2;
+		double halfB = a/2; 
 		
 		return ((x >= center.getX()-halfB && x <= center.getX()+halfB) && y >=center.getY()-halfA && y <= center.getY()+halfA);
 	}
