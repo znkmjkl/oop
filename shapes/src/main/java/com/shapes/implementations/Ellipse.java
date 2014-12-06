@@ -29,10 +29,13 @@ public class Ellipse implements Shape {
 	}
 	public void setB(float b) {
 		this.b = b;
-	}
-	
-	//TODO
-	public boolean contains(float x, float y) {
+	}	
+
+	public boolean contains(float x, float y) {		
+		double res =(x*x) / (a*a) + ( (y*y) / (b*b) );
+		System.out.println(res);
+		if (res <= 1)
+			return true;		
 		return false;
 	}
 }

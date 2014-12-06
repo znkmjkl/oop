@@ -12,9 +12,14 @@ public class Difference implements Shape {
 		this.shape2 = shape2;
 	}
 	
-	//TODO
-	public boolean contains(float x, float y) {
-		return false;
+	public boolean contains(float x, float y) {		
+		if(shape1.contains(x, y) && shape2.contains(x, y)){
+			return false;
+		} else if(shape1.contains(x, y)){
+			System.out.println("okok");
+			return true;
+		}
+		return false;		 
 	}
 
 }
