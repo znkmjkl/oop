@@ -22,9 +22,9 @@ public class TranslatedTest {
 
 		Point2D point1 = new Point2D.Double(4, 4);
 		Point2D point2 = new Point2D.Double(4, 8);
-		Point2D point3 = new Point2D.Double(6.99, 8.99);
-		Point2D point4 = new Point2D.Double(3.01, 8.99);
-		Point2D point5 = new Point2D.Double(3.01, 3.01);
+		Point2D point3 = new Point2D.Double(6.99, 7.99);
+		Point2D point4 = new Point2D.Double(6, 7.01);
+		Point2D point5 = new Point2D.Double(4.01, 4.01);
 
 		return $($(translated, point1), $(translated, point2), $(translated, point3), $(translated, point4),
 				$(translated, point5));
@@ -39,8 +39,8 @@ public class TranslatedTest {
 		Point2D point1 = new Point2D.Double(2.99, 2.99);
 		Point2D point2 = new Point2D.Double(5, 2.99);
 		Point2D point3 = new Point2D.Double(301.99, 6.01);
-		Point2D point4 = new Point2D.Double(2.99, 8);
-		Point2D point5 = new Point2D.Double(7.01, 7.01);
+		Point2D point4 = new Point2D.Double(8, 2.99);
+		Point2D point5 = new Point2D.Double(16.01, 4.01);
 
 		return $($(translated, point1), $(translated, point2), $(translated, point3), $(translated, point4),
 				$(translated, point5));
