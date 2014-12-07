@@ -17,8 +17,8 @@ public class RectangleTest {
 	private static final Object[] getRectanglesAndPoints1() {
 
 		Rectangle rect = new Rectangle(new Point2D.Double(0, 0), 8, 10);
-		Point2D point1 = new Point2D.Double(-4.99, -3.99);
-		Point2D point2 = new Point2D.Double(4.99, 3.99);
+		Point2D point1 = new Point2D.Double(-3.99, -4.99);
+		Point2D point2 = new Point2D.Double(3.99, 4.99);
 		Point2D point3 = new Point2D.Double(0, 0);
 		Point2D point4 = new Point2D.Double(0, 3.99);
 		Point2D point5 = new Point2D.Double(2.5, 3.99);
