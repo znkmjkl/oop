@@ -3,6 +3,7 @@ package com.shapes.implementations;
 import java.awt.geom.Point2D;
 
 import com.shapes.interfaces.Shape;
+import com.shapes.interfaces.Visitator;
 
 public class Rectangle implements Shape {
 	private Point2D center;
@@ -41,6 +42,15 @@ public class Rectangle implements Shape {
 		double halfB = a/2; 
 		
 		return ((x >= center.getX()-halfB && x <= center.getX()+halfB) && y >=center.getY()-halfA && y <= center.getY()+halfA);
+	}
+
+	public void accept(PrettyPrinter v) {
+		
+	}
+
+	public void accept(Visitator v) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

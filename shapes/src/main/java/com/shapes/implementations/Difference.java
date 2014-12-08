@@ -1,6 +1,7 @@
 package com.shapes.implementations;
 
 import com.shapes.interfaces.Shape;
+import com.shapes.interfaces.Visitator;
 
 public class Difference implements Shape {
 	
@@ -19,6 +20,10 @@ public class Difference implements Shape {
 			return true;
 		}
 		return false;		 
+	}
+
+	public void accept(Visitator v) {
+		System.out.println("Difference");
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.shapes.implementations;
 
 import com.shapes.interfaces.Shape;
+import com.shapes.interfaces.Visitator;
 
 public class Intersection implements Shape {
 	
@@ -14,6 +15,10 @@ public class Intersection implements Shape {
 
 	public boolean contains(float x, float y) {
 		return shape1.contains(x, y) && shape2.contains(x, y);
+	}
+
+	public void accept(Visitator v) {
+		System.out.println("Intersection");
 	}
 
 }

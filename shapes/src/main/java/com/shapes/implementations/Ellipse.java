@@ -3,6 +3,7 @@ package com.shapes.implementations;
 import java.awt.geom.Point2D;
 
 import com.shapes.interfaces.Shape;
+import com.shapes.interfaces.Visitator;
 
 public class Ellipse implements Shape {
 
@@ -21,5 +22,9 @@ public class Ellipse implements Shape {
 		if (res <= 1)
 			return true;		
 		return false;
+	}
+
+	public void accept(Visitator v) {
+		System.out.println("Ellipse");
 	}
 }
