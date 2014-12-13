@@ -1,5 +1,9 @@
 package com.shapes.implementations;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import com.shapes.interfaces.Shape;
 
 public class Rotated implements Shape {
@@ -8,12 +12,19 @@ public class Rotated implements Shape {
 	private float angle;
 	private Shape shape;
 	
-	public Rotated(float centerX, float centerY, float angle, Shape shape){
+	private List<Shape> fields = new ArrayList<Shape>();
+	
+	public Rotated() {
+	}
+	
+	public Rotated(float centerX, float centerY, float angle, Shape shape) {
+		this();
 		this.centerX = centerX;
 		this.centerY = centerY;
 		this.angle = angle;
-		this.shape = shape;			
+		this.shape = shape;
 	}
+
 	public boolean contains(float x, float y) {	
 		
 		double xNew = centerX + Math.cos(-angle) * (x - centerX) - Math.sin(-angle) * (y - centerY);
@@ -23,4 +34,24 @@ public class Rotated implements Shape {
 			return true;
 		return false;
 	}
+	
+	public Iterator<Shape> iterator() {
+		
+		fields.add(shape);
+		
+		final Iterator fieldIt = fields.iterator();
+		
+        Iterator<Shape> it = new Iterator<Shape>() {
+
+            public boolean hasNext() {
+            	return fieldIt.hasNext();
+            }
+
+            public Shape next() {
+                return (Shape) fieldIt.next();
+            }
+
+        };
+        return it;
+    }
 }

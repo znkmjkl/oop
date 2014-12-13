@@ -1,9 +1,9 @@
 package com.shapes.implementations;
 
 import java.awt.geom.Point2D;
+import java.util.Iterator;
 
 import com.shapes.interfaces.Shape;
-import com.shapes.interfaces.Visitator;
 
 public class Rectangle implements Shape {
 	private Point2D center;
@@ -15,7 +15,7 @@ public class Rectangle implements Shape {
 	public Rectangle(float a, float b) {
 		this.center = new Point2D.Float(0,0);
 		this.a = a;
-		this.b = b;		
+		this.b = b;
 	}
 	
 	public Rectangle(Point2D center, float a, float b) {
@@ -44,13 +44,20 @@ public class Rectangle implements Shape {
 		return ((x >= center.getX()-halfB && x <= center.getX()+halfB) && y >=center.getY()-halfA && y <= center.getY()+halfA);
 	}
 
-	public void accept(PrettyPrinter v) {
+	public Iterator<Shape> iterator() {
 		
-	}
+        Iterator<Shape> it = new Iterator<Shape>() {
 
-	public void accept(Visitator v) {
-		// TODO Auto-generated method stub
-		
-	}
-	
+            public boolean hasNext() {
+            	return false;
+            }
+
+            public Shape next() {
+                return null;
+            }
+
+        };
+        return it;
+    }
+
 }

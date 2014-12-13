@@ -1,8 +1,8 @@
 package com.shapes.interfaces;
 
-import com.shapes.interfaces.Visitator;
+import java.util.Iterator;
 
-public interface Shape {
+public interface Shape extends Iterable<Shape> {
 	boolean contains(float x, float y);
-	void accept(Visitator v);
+	Iterator<Shape> iterator();
 }
