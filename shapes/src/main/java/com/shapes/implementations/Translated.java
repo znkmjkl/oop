@@ -5,13 +5,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.shapes.interfaces.Shape;
+import com.shapes.interfaces.Visitator;
 
 public class Translated implements Shape {
 	
-	private Shape shape;
+	public Shape shape;
 	
-	private float x;
-	private float y;
+	public float x;
+	public float y;
 	
 	private List<Shape> fields = new ArrayList<Shape>();
 	
@@ -48,5 +49,7 @@ public class Translated implements Shape {
         };
         return it;
     }
-
+	public void accept(Visitator v) {
+		v.visit(this);		
+	}
 }

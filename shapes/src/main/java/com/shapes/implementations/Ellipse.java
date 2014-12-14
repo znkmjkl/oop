@@ -4,12 +4,13 @@ import java.awt.geom.Point2D;
 import java.util.Iterator;
 
 import com.shapes.interfaces.Shape;
+import com.shapes.interfaces.Visitator;
 
 public class Ellipse implements Shape {
 
 	private Point2D center;
-	private float a;
-	private float b;
+	public float a;
+	public float b;
 	
 	public float getA() {
 		return a;
@@ -56,4 +57,8 @@ public class Ellipse implements Shape {
         };
         return it;
     }
+	
+	public void accept(Visitator v) {
+		v.visit(this);		
+	}
 }

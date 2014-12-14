@@ -13,30 +13,33 @@ public class YYTest {
 	public void testContains() throws Exception {
 
 	Shape yy = new Rotated(0, 0, (float) Math.PI,
-	new Difference(
-	new Union(
-	new Difference(
-	new Union(
-	new Difference(
-	new Ellipse(7, 7),
-	new Intersection(
-	new Translated(3, 0, new Rectangle(6, 12)),
-	new Ellipse(6, 6)
-	)
-	),
-	new Translated(0, 3, new Ellipse(3, 3))
-	),
-	new Translated(0, -3, new Ellipse(3, 3))
-	),
-	new Translated(0, -3, new Ellipse(1, 1))
-	),
-	new Translated(0, 3, new Ellipse(1, 1))
-	));
-
+			new Difference(
+					new Union(
+							new Difference(
+									new Union(
+											new Difference(
+													new Ellipse(7, 7),
+													new Intersection(
+															new Translated(3, 0, new Rectangle(6, 12)),
+															new Ellipse(6, 6)
+															)
+													),
+													new Translated(0, 3, new Ellipse(3, 3))
+											),
+											new Translated(0, -3, new Ellipse(3, 3))
+									),
+									new Translated(0, -3, new Ellipse(1, 1))
+							),
+							new Translated(0, 3, new Ellipse(1, 1))
+					));
+	
 	Shape test = new Difference(
-	new Rotated(0, 0, (float) Math.PI / 6, new Ellipse(12, 8)),
-	yy);
-
+			new Rotated(0, 0, (float) Math.PI / 6, new Ellipse(12, 8)),
+			yy);
+	
+	PrettyPrinting pp = new PrettyPrinting();
+	test.accept(pp);
+	
 	assertTrue(test.contains(-0.05539f, -2.936f));
 	assertTrue(test.contains(-6.112f, -6.85f));
 	assertTrue(test.contains(0.01846f, -3.6f));
