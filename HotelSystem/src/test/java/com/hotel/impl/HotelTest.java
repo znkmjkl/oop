@@ -15,9 +15,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.hotel.exceptions.RoomNameAlreadyExistsException;
-import com.hotel.impl.Hotel;
-import com.hotel.impl.QueryResult;
-import com.hotel.impl.Room;
 
 @RunWith(JUnitParamsRunner.class)
 public class HotelTest {

@@ -1,6 +1,7 @@
 package com.hotel.impl;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,6 +71,15 @@ public class Room implements Comparable<Room> {
 		}
 		return 0L;	
 
+	}
+
+	public int price(GregorianCalendar cal) {
+		GregorianCalendar cal2 = new GregorianCalendar();
+		cal2.set(Calendar.YEAR, cal.get(Calendar.YEAR));
+		cal2.set(Calendar.MONTH, cal.get(Calendar.MONTH));
+		cal2.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH));
+		cal2.roll(Calendar.DAY_OF_MONTH, 1);
+		return (int) getRoomPrice(cal, cal2);
 	}
 
 	public long getPrice(Season season) {
