@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Room implements Comparable<Room> {
-	
+
 	//ta stala nie moze byc w getRoomPrice?
 	private static final long divider = 24 * 60 * 60 * 1000;
 	private String name;
@@ -65,11 +65,11 @@ public class Room implements Comparable<Room> {
 
 	public long getPrice() {
 		//return seasonPrices.get());
-		for(Season season : seasonPrices.keySet()){
+		for (Season season : seasonPrices.keySet()) {
 			if (season.getName().equals("normal"))
 				return seasonPrices.get(season);
 		}
-		return 0L;	
+		return 0L;
 
 	}
 
@@ -78,64 +78,64 @@ public class Room implements Comparable<Room> {
 		cal2.set(Calendar.YEAR, cal.get(Calendar.YEAR));
 		cal2.set(Calendar.MONTH, cal.get(Calendar.MONTH));
 		cal2.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH));
-		cal2.roll(Calendar.DAY_OF_MONTH, 1);
+		cal2.add(Calendar.DAY_OF_MONTH, 1);
 		return (int) getRoomPrice(cal, cal2);
 	}
 
 	public long getPrice(Season season) {
 		return seasonPrices.get(season);
 	}
-	
+
 	public long getRoomPrice(Calendar start, Calendar end) {
-		
+
 		long totalPrice = 0;
-		long nights = 0;		
+		long nights = 0;
 		long diff = end.getTimeInMillis() - start.getTimeInMillis();
-		diff = (diff % 10 == 9) ? diff+1 : diff;
+		diff = (diff % 10 == 9) ? diff + 1 : diff;
 		long remainingNights = diff / divider;
-		
-		for(Season s : seasonPrices.keySet()){		
-			if(s.getName().equals("normal"))
+
+		for (Season s : seasonPrices.keySet()) {
+			if (s.getName().equals("normal"))
 				continue;
 				/* kiedy czesc rezerwacji jest na poczatku sezonu */
-			if(end.getTimeInMillis() >= s.getStart().getTimeInMillis() && start.getTimeInMillis() < s.getStart().getTimeInMillis()
-				&& end.getTimeInMillis() < s.getEnd().getTimeInMillis()){
-				
+			if (end.getTimeInMillis() >= s.getStart().getTimeInMillis() && start.getTimeInMillis() < s.getStart().getTimeInMillis()
+					&& end.getTimeInMillis() < s.getEnd().getTimeInMillis()) {
+
 				diff = end.getTimeInMillis() - s.getStart().getTimeInMillis();
-				diff = (diff % 10 == 9) ? diff+1 : diff;
+				diff = (diff % 10 == 9) ? diff + 1 : diff;
 				nights = diff / divider;
 			
 				/* kiedy rezerwacja jest w sezonie lub pokrywa caly sezon */
-			} else if (start.getTimeInMillis() >= s.getStart().getTimeInMillis() && end.getTimeInMillis() <= s.getEnd().getTimeInMillis()){					
-				
+			} else if (start.getTimeInMillis() >= s.getStart().getTimeInMillis() && end.getTimeInMillis() <= s.getEnd().getTimeInMillis()) {
+
 				diff = end.getTimeInMillis() - start.getTimeInMillis();
-				diff = (diff % 10 == 9) ? diff+1 : diff;
+				diff = (diff % 10 == 9) ? diff + 1 : diff;
 				nights = diff / divider;
 		
 				/* kiedy rezerwacja rozpoczyna sie pod koniec sezonu a potem jest poza  */
-			} else if (start.getTimeInMillis() >= s.getStart().getTimeInMillis() && end.getTimeInMillis() > s.getEnd().getTimeInMillis() 
-				&& start.getTimeInMillis() < s.getEnd().getTimeInMillis()){
-					
+			} else if (start.getTimeInMillis() >= s.getStart().getTimeInMillis() && end.getTimeInMillis() > s.getEnd().getTimeInMillis()
+					&& start.getTimeInMillis() < s.getEnd().getTimeInMillis()) {
+
 				diff = s.getEnd().getTimeInMillis() - start.getTimeInMillis();
-				diff = (diff % 10 == 9) ? diff+1 : diff;
+				diff = (diff % 10 == 9) ? diff + 1 : diff;
 				nights = diff / divider;
 			
-				/* kiedy rezerwacja jest wieksza i pokrywa caly sezon */	
-			} else if (start.getTimeInMillis() < s.getStart().getTimeInMillis() && end.getTimeInMillis() > s.getEnd().getTimeInMillis()){
-					
+				/* kiedy rezerwacja jest wieksza i pokrywa caly sezon */
+			} else if (start.getTimeInMillis() < s.getStart().getTimeInMillis() && end.getTimeInMillis() > s.getEnd().getTimeInMillis()) {
+
 				diff = s.getEnd().getTimeInMillis() - s.getStart().getTimeInMillis();
-				diff = (diff % 10 == 9) ? diff+1 : diff;
+				diff = (diff % 10 == 9) ? diff + 1 : diff;
 				nights = diff / divider;
-			
+
 			}
-			
-			totalPrice += nights * getPrice(s);				
+
+			totalPrice += nights * getPrice(s);
 			remainingNights -= nights;
-			nights = 0;				
-					
+			nights = 0;
+
 		}
 		totalPrice += remainingNights * getPrice();
-		
+
 		//System.out.println("CENA CALKOWITA: " + totalPrice + " dla pokoju " + room.getName());
 		return totalPrice;
 	}
@@ -158,7 +158,7 @@ public class Room implements Comparable<Room> {
 		return this.name != null ? this.name.hashCode() : 0;
 	}
 
-	
+
 	public int compareTo(Room o) {
 		if (this.getSize() > o.getSize()) {
 			return -1;

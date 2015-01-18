@@ -18,60 +18,60 @@ import com.hotel.exceptions.RoomNameAlreadyExistsException;
 
 @RunWith(JUnitParamsRunner.class)
 public class HotelTest {
-	
+
 	private Hotel hotel;
 	private Hotel hotel2;
 	private Hotel emptyHotel;
-	
+
 	private Calendar start;
 	private Calendar end;
-	
+
 	private Person person;
-	
+
 	private static final Object[] getQueryResults() {
 
 		List<QueryResult> queryResults1 = new ArrayList<QueryResult>();
-		queryResults1.add(new QueryResult(120l*4, new Room("room1")));
+		queryResults1.add(new QueryResult(120l * 4, new Room("room1")));
 
 		List<QueryResult> queryResults2 = new ArrayList<QueryResult>();
-		queryResults2.add(new QueryResult(180l*4, new Room("room2")));
-		queryResults2.add(new QueryResult(180l*4, new Room("room22")));
+		queryResults2.add(new QueryResult(180l * 4, new Room("room2")));
+		queryResults2.add(new QueryResult(180l * 4, new Room("room22")));
 
 		List<QueryResult> queryResults3 = new ArrayList<QueryResult>();
-		queryResults3.add(new QueryResult(300l*4, new Room("room4")));
-		queryResults3.add(new QueryResult(300l*4, new Room("room1"), new Room("room2")));
-		queryResults3.add(new QueryResult(300l*4, new Room("room1"), new Room("room22")));
+		queryResults3.add(new QueryResult(300l * 4, new Room("room4")));
+		queryResults3.add(new QueryResult(300l * 4, new Room("room1"), new Room("room2")));
+		queryResults3.add(new QueryResult(300l * 4, new Room("room1"), new Room("room22")));
 
 		List<QueryResult> queryResults4 = new ArrayList<QueryResult>();
-		queryResults4.add(new QueryResult(300l*4, new Room("room4")));
+		queryResults4.add(new QueryResult(300l * 4, new Room("room4")));
 
 		return $(
-			$(1, queryResults1),
-			$(2, queryResults2),
-			$(3, queryResults3),
-			$(4, queryResults4)
+				$(1, queryResults1),
+				$(2, queryResults2),
+				$(3, queryResults3),
+				$(4, queryResults4)
 		);
 	}
-	
+
 	private static final Object[] getQueryResultsFromHotelWithReservations() {
 
 		List<QueryResult> queryResults1 = new ArrayList<QueryResult>();
-		queryResults1.add(new QueryResult(180l*2, new Room("room2")));
-		
+		queryResults1.add(new QueryResult(180l * 2, new Room("room2")));
+
 		List<QueryResult> queryResults2 = new ArrayList<QueryResult>();
-		queryResults2.add(new QueryResult(180l*2, new Room("room2")));
-		
+		queryResults2.add(new QueryResult(180l * 2, new Room("room2")));
+
 		List<QueryResult> queryResults3 = new ArrayList<QueryResult>();
-		queryResults3.add(new QueryResult(240l*2, new Room("room3")));
-		
+		queryResults3.add(new QueryResult(240l * 2, new Room("room3")));
+
 		List<QueryResult> queryResults4 = new ArrayList<QueryResult>();
-		queryResults4.add(new QueryResult(560l*2, new Room("room4"), new Room("room3")));
+		queryResults4.add(new QueryResult(560l * 2, new Room("room4"), new Room("room3")));
 
 		return $(
-			$(1, queryResults1),
-			$(2, queryResults2),
-			$(3, queryResults3),
-			$(7, queryResults4)
+				$(1, queryResults1),
+				$(2, queryResults2),
+				$(3, queryResults3),
+				$(7, queryResults4)
 		);
 	}
 
@@ -80,56 +80,56 @@ public class HotelTest {
 		hotel = new Hotel(new Room(1, 130l, "room1"), new Room(2, 180l, "room2"), new Room(2, 200l, "room22"), new Room(3, 240l, "room3"), new Room(4, 320l, "room4"));
 		hotel2 = new Hotel(new Room(1, 120l, "room1"), new Room(2, 180l, "room2"), new Room(2, 180l, "room22"), new Room(4, 300l, "room4"));
 		emptyHotel = new Hotel();
-		
+
 		start = Calendar.getInstance();
 		end = Calendar.getInstance();
 		start.set(2014, 6, 18);
 		end.set(2014, 6, 22);
-		
+
 		person = new Person("Mateusz", "Jancarz", "mati@mati.pl", "Krakow 15");
 	}
-	
+
 	@Test(expected = IllegalArgumentException.class)
 	public void roomsSetterShouldThrowIAE() {
-		
+
 		List<Room> rooms = new ArrayList<Room>();
 		rooms.add(new Room("room1"));
 		rooms.add(new Room("room1"));
-		
+
 		emptyHotel.setRooms(rooms);
 	}
-	
+
 	@Test(expected = RoomNameAlreadyExistsException.class)
 	public void addShouldThrowRNAE() {
 		emptyHotel.add(new Room("room1"));
 		emptyHotel.add(new Room("room1"));
 	}
-	
+
 	@Test(expected = RoomNameAlreadyExistsException.class)
 	public void constructorShouldThrowRNAE() {
 		new Hotel(new Room(1, 130l, "room1"), new Room(2, 180l, "room2"), new Room(2, 180l, "room2"));
 	}
-	
+
 
 	@Test
 	public void searchEmptyHotel() {
 		Assert.assertEquals(0, emptyHotel.findFreeRooms(start, end, 5).size());
 	}
-	
+
 	//Simple check - without any reservations
 	@Test
 	@Parameters(method = "getQueryResults")
 	public void searchForCheapestQueryResults(int peopleNr, List<QueryResult> queryResults) {
-		
+
 		List<QueryResult> qrs = hotel2.findFreeRooms(start, end, peopleNr);
-		
+
 		Assert.assertEquals(true, qrs.equals(queryResults));
 	}
-	
+
 	@Test
 	@Parameters(method = "getQueryResultsFromHotelWithReservations")
 	public void searchForCheapestQueryResultsInHotelWithReservations(int peopleNr, List<QueryResult> queryResults) {
-		
+
 		end.set(2014, 6, 20);
 		hotel.reserve(start, end, new QueryResult(0l, new Room("room1")), person);
 
@@ -184,21 +184,21 @@ public class HotelTest {
 		hotel.reserve(start, end, result.get(0), p);
 		Assert.assertEquals(2, hotel.getReservations().size());
 		Assert.assertTrue(p.equals(hotel.getReservations().get(0).getPerson()));
-	
+
 		long price2 = r2.getPrice() * diff;
 		List<QueryResult> result2 = hotel.findFreeRooms(start, end, 2);
 		Assert.assertEquals(price2, result2.get(0).getPrice());
 		hotel.reserve(start, end, result2.get(0), p2);
-		Assert.assertEquals(3, hotel.getReservations().size());		
-		Assert.assertTrue(p2.equals(hotel.getReservations().get(2).getPerson()));		
+		Assert.assertEquals(3, hotel.getReservations().size());
+		Assert.assertTrue(p2.equals(hotel.getReservations().get(2).getPerson()));
 
 		long price3 = r4.getPrice() * diff;
-		List<QueryResult> result3 = hotel.findFreeRooms(start, end, 3);		
+		List<QueryResult> result3 = hotel.findFreeRooms(start, end, 3);
 		Assert.assertEquals(price3, result3.get(0).getPrice());
-		hotel.reserve(start, end, result3.get(0), p3);		
+		hotel.reserve(start, end, result3.get(0), p3);
 		Assert.assertEquals(4, hotel.getReservations().size());
 		Assert.assertTrue(p3.equals(hotel.getReservations().get(3).getPerson()));
-		
+
 
 		Assert.assertEquals("room1", hotel.getReservations().get(0).getRoom().name());
 		Assert.assertEquals("room3", hotel.getReservations().get(1).getRoom().name());

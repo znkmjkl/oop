@@ -39,7 +39,7 @@ public class Accommodator {
 	}
 
 	private static List<QueryResult> addResult(List<Room> coins, List<Room> amounts, int highest, int sum1, int goal,
-			List<QueryResult> results) {
+											   List<QueryResult> results) {
 
 		if (sum1 >= goal) {
 			addToResults(coins, amounts, results);
@@ -65,7 +65,7 @@ public class Accommodator {
 	}
 
 	public static List<QueryResult> getCheapestQueryResults(int peopleNr, long nights, int resultsNr, Calendar start,
-			Calendar end, List<Room> allRooms, List<Room> availableRooms) {
+															Calendar end, List<Room> allRooms, List<Room> availableRooms) {
 
 		List<QueryResult> rawResults = addResult(new ArrayList<Room>(), new ArrayList<Room>(allRooms), 0, 0, peopleNr,
 				new ArrayList<QueryResult>());

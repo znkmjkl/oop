@@ -15,9 +15,9 @@ public interface HotelInt {
 	public Room room(String name);
 
 	public List<QueryResult> findFreeRooms(Calendar start, Calendar end,
-			int n_persons);
+										   int n_persons);
 
 	public void reserve(Calendar start, Calendar end, QueryResult result,
-			Person person);
+						Person person);
 
 }

@@ -10,16 +10,16 @@ import com.hotel.interfaces.HotelInt;
 import com.hotel.utils.Accommodator;
 
 public class Hotel implements HotelInt {
-	
+
 	public static final long divider = 24 * 60 * 60 * 1000;
 
 	private List<Reservation> reservations = new ArrayList<Reservation>();
 
 	private List<Room> rooms = new ArrayList<Room>();
-	
+
 	//TODO mozna traktowac jako liste podstawowych sezonow, aby wygodniej dodac je do wiekszej liczby pokoi
 	private List<Season> commonSeasons = new ArrayList<Season>();
-	
+
 	public Hotel(Room... rooms) {
 		for (Room room : rooms) {
 			add(room);
@@ -60,7 +60,7 @@ public class Hotel implements HotelInt {
 
 		long diffs = end.getTimeInMillis() - start.getTimeInMillis();
 		long nights = diffs / divider;
-		
+
 		return Accommodator.getCheapestQueryResults(n_persons, nights, 1, start, end, getRooms(), getAvailableRooms(start, end));
 	}
 
@@ -72,7 +72,7 @@ public class Hotel implements HotelInt {
 
 		for (Reservation res : getReservations()) {
 			if ((startMs <= res.getStart().getTimeInMillis() && endMs >= res.getStart().getTimeInMillis())
-				|| (startMs <= res.getEnd().getTimeInMillis() && endMs >= res.getEnd().getTimeInMillis())) {
+					|| (startMs <= res.getEnd().getTimeInMillis() && endMs >= res.getEnd().getTimeInMillis())) {
 				if (allRooms.contains(res.getRoom())) {
 					allRooms.remove(res.getRoom());
 				}
@@ -89,7 +89,7 @@ public class Hotel implements HotelInt {
 	public void setReservations(List<Reservation> reservations) {
 		this.reservations = reservations;
 	}
-	
+
 	//TODO throw IAE if start > end
 	public void reserve(Calendar start, Calendar end, QueryResult toReserve, Person person) {
 		for (Room room : toReserve.getRooms()) {
