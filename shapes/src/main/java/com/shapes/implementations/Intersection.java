@@ -5,11 +5,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.shapes.interfaces.Shape;
+import com.shapes.interfaces.Visitator;
 
 public class Intersection implements Shape {
 	
-	private Shape shape1;
-	private Shape shape2;
+	public Shape shape1;
+	public Shape shape2;
 	
 	private List<Shape> fields = new ArrayList<Shape>();
 	
@@ -42,4 +43,8 @@ public class Intersection implements Shape {
         };
         return it;
     }
+	
+	public void accept(Visitator v) {
+		v.visit(this);		
+	}
 }

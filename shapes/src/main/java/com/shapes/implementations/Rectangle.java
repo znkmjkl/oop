@@ -4,13 +4,14 @@ import java.awt.geom.Point2D;
 import java.util.Iterator;
 
 import com.shapes.interfaces.Shape;
+import com.shapes.interfaces.Visitator;
 
 public class Rectangle implements Shape {
 	private Point2D center;
 	
 	//a - vertical, b - horizontal
-	private float a;
-	private float b;
+	public float a;
+	public float b;
 	
 	public Rectangle(float a, float b) {
 		this.center = new Point2D.Float(0,0);
@@ -59,5 +60,9 @@ public class Rectangle implements Shape {
         };
         return it;
     }
+	
+	public void accept(Visitator v) {
+		v.visit(this);		
+	}
 
 }

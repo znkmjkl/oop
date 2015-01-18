@@ -5,12 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.shapes.interfaces.Shape;
+import com.shapes.interfaces.Visitator;
 
 public class Rotated implements Shape {
-	private float centerX;
-	private float centerY;
-	private float angle;
-	private Shape shape;
+	public float centerX;
+	public float centerY;
+	public float angle;
+	public Shape shape;
 	
 	private List<Shape> fields = new ArrayList<Shape>();
 	
@@ -54,4 +55,7 @@ public class Rotated implements Shape {
         };
         return it;
     }
+	public void accept(Visitator v) {
+		v.visit(this);		
+	}
 }
